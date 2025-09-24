@@ -1,0 +1,86 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #43cea2, #185a9d);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 420px;
+    margin: 100px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #43cea2;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0 20px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Кнопка реєстрації */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #43cea2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #185a9d;
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* Навігаційні посилання як кнопки */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.nav-links a.button {
+    padding: 12px 25px;
+    background-color: #fff;
+    color: #43cea2;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid #43cea2;
+    border-radius: 12px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.nav-links a.button:hover {
+    background-color: #43cea2;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Повідомлення про помилки */
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    color: red;
+    font-weight: bold;
+}

@@ -1,0 +1,52 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #e0f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #00796b;
+}
+
+.welcome {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Навігаційні посилання */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.nav-links a.button, button {
+    padding: 16px 35px;
+    background-color: #00796b;
+    color: #fff;
+    font-weight: bold;
+    border: 2px solid #fff;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.nav-links a.button:hover, button:hover {
+    background-color: #004d40;
+    color: #fff;
+    transform: translateY(-3px);
+}

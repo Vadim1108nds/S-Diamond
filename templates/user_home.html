@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Кабінет користувача</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_home.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Вітаємо, {{ session.get('username') }}!</h2>
+
+        <p class="welcome">Це ваш особистий кабінет.</p>
+
+        <div class="nav-links">
+            <a href="{{ url_for('admin_home') }}" class="button">Адмінка</a>
+            <a href="{{ url_for('index') }}" class="button">На головну</a>
+            <a href="{{ url_for('logout') }}" class="button">Вихід</a>
+        </div>
+    </div>
+</body>
+</html>

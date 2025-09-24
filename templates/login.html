@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Логін</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Логін</h2>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+            {% for msg in messages %}
+                <li>{{ msg }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label>Username:
+                <input type="text" name="username" required>
+            </label>
+            <label>Password:
+                <input type="password" name="password" required>
+            </label>
+            <button type="submit">Увійти</button>
+        </form>
+
+        <div class="nav-links">
+            <a href="{{ url_for('register') }}" class="button">Зареєструватися</a>
+            <a href="{{ url_for('index') }}" class="button">На головну</a>
+        </div>
+    </div>
+</body>
+</html>

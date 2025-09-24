@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Реєстрація</h2>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+            {% for msg in messages %}
+                <li>{{ msg }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label>Username:
+                <input type="text" name="username" required>
+            </label>
+            <label>Email:
+                <input type="email" name="email" required>
+            </label>
+            <label>Password:
+                <input type="password" name="password" required>
+            </label>
+            <button type="submit">Зареєструватися</button>
+        </form>
+
+        <div class="nav-links">
+            <a href="{{ url_for('login') }}" class="button">Вхід</a>
+            <a href="{{ url_for('index') }}" class="button">На головну</a>
+        </div>
+    </div>
+</body>
+</html>

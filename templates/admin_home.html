@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Адмінська панель</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_home.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Адмінська панель S diamond</h1>
+            <nav class="top-nav">
+                <a href="{{ url_for('index') }}" class="button">Головна</a>
+                <a href="{{ url_for('user_home') }}" class="button">Кабінет користувача</a>
+                <a href="{{ url_for('logout') }}" class="button">Вихід</a>
+            </nav>
+        </header>
+
+        <section class="stats">
+            <div class="card">
+                <h3>Кількість користувачів</h3>
+                <p>{{ users_count }}</p>
+            </div>
+            <!-- Можна додати ще картки для статистики -->
+            <!-- <div class="card">
+                <h3>Інша статистика</h3>
+                <p>0</p>
+            </div> -->
+        </section>
+
+        <section class="actions">
+            <h2>Дії адміністратора</h2>
+            <div class="nav-links">
+                <a href="{{ url_for('register') }}" class="button">Додати користувача</a>
+                <a href="{{ url_for('user_home') }}" class="button">Переглянути кабінет</a>
+                <a href="{{ url_for('logout') }}" class="button">Вихід</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

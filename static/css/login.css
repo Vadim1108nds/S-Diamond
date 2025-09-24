@@ -1,0 +1,86 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 420px;
+    margin: 100px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #ff7e5f;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0 20px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Кнопка увійти */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #ff7e5f;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #fff;
+    color: #ff7e5f;
+    transform: translateY(-3px);
+}
+
+/* Навігаційні посилання як кнопки */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.nav-links a.button {
+    padding: 12px 25px;
+    background-color: #fff;
+    color: #ff7e5f;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid #ff7e5f;
+    border-radius: 12px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.nav-links a.button:hover {
+    background-color: #ff7e5f;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Повідомлення про помилки */
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    color: red;
+    font-weight: bold;
+}
