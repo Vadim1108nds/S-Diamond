@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+link rel="stylesheet" href="{{ url_for('static', filename='css/create_orders.css') }}">
+<div class="order-container">
+  <h2>Створити замовлення</h2>
+
+  <form method="POST" class="order-form" id="orderForm">
+    <div class="form-group">
+      <label>Тип замовлення:</label>
+      <select name="order_type" id="orderType" required>
+        <option value="">Оберіть тип</option>
+        <option value="classic">Класичний</option>
+        <option value="custom">Кастомний</option>
+      </select>
+    </div>
+
+    <!-- === Блок для класичних === -->
+    <div id="classicFields" style="display:none;">
+      <label>Оберіть готовий виріб:</label>
+      <select name="product">
+        {% for m in materials %}
+          <option value="{{ m._id }}">{{ m.name }} — {{ m.price }} $</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- === Блок для кастомних === -->
+    <div id="customFields" style="display:none;">
+      <div class="form-group">
+        <label>Тип виробу:</label>
+        <select name="item_type" required>
+          <option value="Каблучка">Каблучка</option>
+          <option value="Сережки">Сережки</option>
+          <option value="Кулон">Кулон</option>
+          <option value="Браслет">Браслет</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Метал:</label>
+        <select name="metal" required>
+          <option value="Золото">Золото</option>
+          <option value="Срібло">Срібло</option>
+          <option value="Платина">Платина</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Дорогоцінний камінь:</label>
+        <select name="stone" required>
+          <option value="Діамант">Діамант</option>
+          <option value="Сапфір">Сапфір</option>
+          <option value="Рубін">Рубін</option>
+          <option value="Смарагд">Смарагд</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit">Створити замовлення</button>
+  </form>
+</div>
+
+<script>
+document.getElementById("orderType").addEventListener("change", function() {
+  const classic = document.getElementById("classicFields");
+  const custom = document.getElementById("customFields");
+
+  if (this.value === "classic") {
+    classic.style.display = "block";
+    custom.style.display = "none";
+  } else if (this.value === "custom") {
+    custom.style.display = "block";
+    classic.style.display = "none";
+  } else {
+    classic.style.display = "none";
+    custom.style.display = "none";
+  }
+});
+</script>
+{% endblock %}

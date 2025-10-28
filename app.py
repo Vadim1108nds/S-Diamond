@@ -4,6 +4,9 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
+from bson.objectid import ObjectId
+from datetime import datetime
+
 
 # Load .env if present
 load_dotenv()
@@ -88,13 +91,7 @@ def logout():
     flash("Вихід виконано.")
     return redirect(url_for('index'))
 
-# ---- Домашні сторінки за ролями ----
-@app.route('/admin/home')
-@role_required(['admin'])
-def admin_home():
-    # Приклад: отримати базову статистику (кількість користувачів)
-    users_count = mongo.db.users.count_documents({})
-    return render_template("admin_home.html", users_count=users_count)
+
 
 @app.route('/user/home')
 @role_required(['user'])
@@ -112,6 +109,79 @@ def profile():
         "username": session.get("username"),
         "role": session.get("role")
     }
+@app.route('/create_order', methods=['POST'])
+@role_required(['user'])
+def create_order():
+    user_id = session.get('user_id')
+    username = session.get('username')
+
+    order_type = request.form.get('order_type')  # "стандартне" або "кастомне"
+    item = request.form.get('item')
+    material = request.form.get('material')
+    stone = request.form.get('stone', '')
+    custom_name = request.form.get('custom_name', '')
+    customer_name = request.form.get('customer_name')
+    customer_phone = request.form.get('customer_phone')
+
+    # Перевірка обов'язкових полів
+    if not all([order_type, item, material, customer_name, customer_phone, custom_name]):
+        flash("Заповніть усі обов'язкові поля.")
+        return redirect(url_for('user_home'))
+
+    # Створюємо документ для MongoDB
+    order_doc = {
+        "user_id": user_id,
+        "username": username,
+        "order_type": order_type,
+        "item": item,
+        "material": material,
+        "stone": stone,
+        "custom_name": custom_name,
+        "customer_name": customer_name,
+        "customer_phone": customer_phone,
+        "status": "нове замовлення", 
+        "created_at": datetime.utcnow()
+    }
+
+    mongo.db.orders.insert_one(order_doc)
+    flash(f"Замовлення '{custom_name}' успішно створено!", "success")
+    return redirect(url_for('user_home'))
+
+# --- Адмінка ---
+# --- Адмінська панель ---
+@app.route('/admin/home')
+@role_required(['admin'])
+def admin_home():
+    orders = list(mongo.db.orders.find().sort('created_at', -1))
+    users = list(mongo.db.users.find().sort('username', 1))
+    users_count = mongo.db.users.count_documents({})
+    return render_template('admin_home.html', orders=orders, users=users, users_count=users_count)
+
+@app.route('/update_order_status/<order_id>', methods=['POST'])
+@role_required(['admin'])
+def update_order_status(order_id):
+    new_status = request.form.get('status')
+    if new_status not in ["нове замовлення", "в роботі", "неможливе", "готове до видачі"]:
+        flash("Некоректний статус!", "error")
+    else:
+        mongo.db.orders.update_one({'_id': ObjectId(order_id)}, {'$set': {'status': new_status}})
+        flash(f"Статус замовлення оновлено на '{new_status}'", "success")
+    return redirect(url_for('admin_home'))
+
+@app.route('/delete_order/<order_id>', methods=['POST'])
+@role_required(['admin'])
+def delete_order(order_id):
+    mongo.db.orders.delete_one({'_id': ObjectId(order_id)})
+    flash("Замовлення успішно видалено.", "success")
+    return redirect(url_for('admin_home'))
+
+@app.route('/delete_user/<user_id>', methods=['POST'])
+@role_required(['admin'])
+def delete_user(user_id):
+    mongo.db.users.delete_one({'_id': ObjectId(user_id)})
+    flash("Користувача успішно видалено.", "success")
+    return redirect(url_for('admin_home'))
+
 
 
 

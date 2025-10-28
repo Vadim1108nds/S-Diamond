@@ -1,103 +1,230 @@
+/* Загальні стилі */
 body {
-    font-family: 'Roboto', sans-serif;
-    background: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf9f3;
+    color: #333;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 40px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 95%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+/* --- Header --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #fdf6e3, #fff6e0);
+    padding: 20px 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    margin-bottom: 30px;
 }
 
 header h1 {
-    text-align: center;
-    color: #2575fc;
-    margin-bottom: 20px;
-}
-
-.top-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 40px;
+    font-size: 2.2em;
+    color: #b88b4a;
+    margin: 0;
 }
 
 .top-nav a.button {
-    padding: 12px 25px;
-    background-color: #fff;
-    color: #2575fc;
-    font-weight: bold;
+    background: #b88b4a;
+    color: #fff;
     text-decoration: none;
-    border: 2px solid #2575fc;
-    border-radius: 12px;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    padding: 12px 25px;
+    border-radius: 8px;
+    margin-left: 10px;
+    font-weight: 600;
     transition: all 0.3s ease;
 }
 
 .top-nav a.button:hover {
-    background-color: #2575fc;
-    color: #fff;
-    transform: translateY(-2px);
+    background: #a17a3f;
 }
 
-/* Статистика */
-.stats {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 40px;
+.top-nav a.exit {
+    background: #f44336;
 }
 
-.stats .card {
-    background: #2575fc;
-    color: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    flex: 1 1 200px;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    border: 2px solid #fff;
+.top-nav a.exit:hover {
+    background: #d32f2f;
 }
 
-.stats .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-.actions h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #2575fc;
-}
-
-.nav-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.nav-links a.button {
-    padding: 12px 30px;
-    background-color: #fff;
-    color: #2575fc;
-    font-weight: bold;
-    text-decoration: none;
-    border: 2px solid #2575fc;
+/* --- Секції --- */
+.section {
+    background: #fff;
+    padding: 30px 35px;  /* трохи більше padding */
     border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    margin-bottom: 50px; /* збільшили відстань між секціями */
+}
+
+.stats {
+    margin-bottom: 50px; /* додатковий простір перед наступною секцією */
+}
+
+.actions {
+    margin-bottom: 50px;
+}
+
+.orders {
+    margin-bottom: 50px;
+}
+/* --- Статистика користувачів --- */
+.stats .card {
+    display: inline-block;
+    width: 200px;
+    background: #fff6e6;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-align: center;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.stats .card h3 {
+    margin: 0 0 10px 0;
+    color: #b88b4a;
+    font-size: 1.2em;
+}
+
+.stats .card p {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.stats {
+    margin-bottom: 50px; /* додатковий простір перед наступною секцією */
+}
+
+/* --- Кнопки дій --- */
+.actions .nav-links a.button {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 12px 25px;
+    font-weight: 600;
+    border-radius: 8px;
+    background: #b88b4a;
+    color: #fff;
+    text-decoration: none;
     transition: all 0.3s ease;
 }
 
-.nav-links a.button:hover {
-    background-color: #2575fc;
+.actions .nav-links a.button:hover {
+    background: #a17a3f;
+}
+
+/* --- Таблиці замовлень --- */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 1000px;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #f0e3d1;
+    font-size: 0.95em;
+}
+
+th {
+    background-color: #f5f0e6;
+    color: #b88b4a;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+tr:hover {
+    background-color: #fff3e0;
+}
+.stats {
+    margin-bottom: 50px; /* додатковий простір перед наступною секцією */
+}
+/* --- Статус замовлення --- */
+.status-select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-weight: 600;
+}
+
+.status-select.new { background-color: #fff4cc; color: #8a6d3b; }
+.status-select.working { background-color: #cce5ff; color: #004085; }
+.status-select.cancel { background-color: #f8d7da; color: #721c24; }
+.status-select.ready { background-color: #d4edda; color: #155724; }
+
+/* --- Кнопки --- */
+button.update-btn {
+    background: #4CAF50;
     color: #fff;
-    transform: translateY(-3px);
+    border: none;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+}
+
+button.update-btn:hover {
+    background: #45a049;
+}
+
+button.delete-btn {
+    background: #f44336;
+    color: #fff;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+button.delete-btn:hover {
+    background: #d32f2f;
+}
+
+/* --- Мобільна адаптація --- */
+@media screen and (max-width: 1200px) {
+    .top-nav {
+        flex-direction: column;
+    }
+    .top-nav a.button {
+        margin: 5px 0;
+    }
+    table {
+        min-width: 800px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    table {
+        font-size: 0.85em;
+    }
+    th, td {
+        padding: 10px 12px;
+    }
 }
