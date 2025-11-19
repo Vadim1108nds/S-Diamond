@@ -12,8 +12,8 @@ from datetime import datetime
 load_dotenv()
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/sdiamond")
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "change_this_secret")
+app.config["MONGO_URI"] = os.getenv("MONGO_URI")  # беремо з Render Environment
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 mongo = PyMongo(app)
 
