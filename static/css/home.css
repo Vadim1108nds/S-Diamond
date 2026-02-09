@@ -1,0 +1,160 @@
+* {
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI;
+}
+
+body {
+background:#EAF3FA;
+color:#0F1B2D;
+}
+
+.toolbar {
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 60px;
+background:white;
+box-shadow:0 5px 20px rgba(0,0,0,.1);
+position:sticky;
+top:0;
+z-index:10;
+}
+
+nav a {
+margin:0 15px;
+text-decoration:none;
+color:#0F1B2D;
+}
+
+.auth a {
+margin-left:10px;
+padding:8px 16px;
+border-radius:20px;
+text-decoration:none;
+}
+
+.login {border:1px solid #0F1B2D;}
+.register {background:#0F1B2D;color:white;}
+
+.hero {
+height:85vh;
+background:url("https://images.unsplash.com/photo-1605100804763-247f67b3557e") center/cover;
+display:flex;
+align-items:center;
+padding-left:80px;
+}
+
+.hero-content {
+background:rgba(255,255,255,.9);
+padding:50px;
+border-radius:30px;
+max-width:550px;
+}
+
+.hero-buttons a {
+margin-right:15px;
+}
+
+.btn-main {
+background:#0F1B2D;
+color:white;
+padding:12px 25px;
+border-radius:25px;
+text-decoration:none;
+}
+
+.btn-second {
+border:1px solid #0F1B2D;
+padding:12px 25px;
+border-radius:25px;
+text-decoration:none;
+color:#0F1B2D;
+}
+
+.slider, .products, .video-section, .about {
+padding:80px 10%;
+text-align:center;
+}
+
+.slider-box {
+position:relative;
+height:420px;
+margin-top:40px;
+}
+
+.slide {
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:.8s;
+border-radius:30px;
+}
+
+.slide.active {opacity:1;}
+
+.grid {
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+margin-top:40px;
+}
+
+.product {
+background:white;
+padding:25px;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+transition:.3s;
+}
+
+.product:hover {transform:translateY(-8px);}
+
+.product img {
+width:100%;
+border-radius:20px;
+}
+
+.product button {
+margin-top:15px;
+padding:10px;
+border:none;
+background:#0F1B2D;
+color:white;
+border-radius:20px;
+cursor:pointer;
+}
+
+.video-box {
+margin-top:40px;
+max-width:900px;
+margin-left:auto;
+margin-right:auto;
+}
+
+.video-box video {
+width:100%;
+border-radius:30px;
+box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.about {
+display:flex;
+align-items:center;
+gap:50px;
+text-align:left;
+}
+
+.about img {
+width:45%;
+border-radius:30px;
+}
+
+footer {
+text-align:center;
+padding:30px;
+background:white;
+}

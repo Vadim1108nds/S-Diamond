@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Sdiamond — Ювелірна майстерня</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+<body>
+
+<header class="toolbar">
+    <div class="logo">💎 Sdiamond</div>
+    <nav>
+        <a href="#">Головна</a>
+        <a href="#">Каталог</a>
+        <a href="#">Послуги</a>
+        <a href="#">Про нас</a>
+        <a href="#">Контакти</a>
+    </nav>
+    <div class="auth">
+        <a href="{{ url_for('login') }}" class="login">Вхід</a>
+        <a href="{{ url_for('register') }}" class="register">Реєстрація</a>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Ювелірна майстерня Sdiamond</h1>
+        <p>
+            Ми створюємо унікальні прикраси з золота та срібла: каблучки, обручки,
+            сережки та підвіски. Поєднуємо ручну роботу, 3D-дизайн та сучасні технології.
+        </p>
+        <div class="hero-buttons">
+            <a href="#products" class="btn-main">Каталог</a>
+            <a href="#about" class="btn-second">Дізнатись більше</a>
+        </div>
+    </div>
+</section>
+
+<section class="slider">
+    <h2>Наші колекції</h2>
+    <p>Актуальні дизайнерські рішення для щоденного стилю та особливих подій.</p>
+
+    <div class="slider-box">
+        <img class="slide active" src="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6">
+        <img class="slide" src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338">
+        <img class="slide" src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f">
+    </div>
+</section>
+
+<section id="products" class="products">
+    <h2>Популярні вироби</h2>
+    <p>Вироби з можливістю індивідуального замовлення та гравіювання.</p>
+
+    <div class="grid">
+        <div class="product">
+            <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338">
+            <h3>Каблучка з діамантом</h3>
+            <p>Біле золото 585 проби, ручна посадка каменю, точна геометрія та комфорт.</p>
+            <span>від 14 500 грн</span>
+            <button>Замовити</button>
+        </div>
+
+        <div class="product">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e">
+            <h3>Обручки</h3>
+            <p>Символ кохання з можливістю вибору профілю та індивідуального гравіювання.</p>
+            <span>від 12 000 грн</span>
+            <button>Замовити</button>
+        </div>
+
+        <div class="product">
+            <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f">
+            <h3>Підвіска</h3>
+            <p>Авторська форма, поліровка, вибір вставок та металу.</p>
+            <span>від 8 200 грн</span>
+            <button>Замовити</button>
+        </div>
+    </div>
+</section>
+
+<section class="video-section">
+    <h2>Як ми працюємо</h2>
+    <p>
+        Весь процес — від ідеї до готової прикраси.
+        Проєктування, 3D-модель, виготовлення та фінальна поліровка.
+    </p>
+
+    <div class="video-box">
+        <video controls>
+            <source src="https://cdn.coverr.co/videos/coverr-gold-jewelry-4032/1080p.mp4" type="video/mp4">
+        </video>
+    </div>
+</section>
+
+<section id="about" class="about">
+    <img src="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6">
+    <div>
+        <h2>Про майстерню Sdiamond</h2>
+        <p>
+            Ми поєднуємо класичне ювелірне мистецтво та сучасні технології.
+            Кожен виріб створюється індивідуально під клієнта.
+        </p>
+        <ul>
+            <li>✔ Індивідуальний дизайн</li>
+            <li>✔ 3D-проєкт перед виготовленням</li>
+            <li>✔ Ручна робота майстрів</li>
+            <li>✔ Контроль якості</li>
+            <li>✔ Преміальні матеріали</li>
+        </ul>
+        <a href="#" class="btn-main">Звʼязатись з нами</a>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Sdiamond — Ювелірна майстерня</p>
+</footer>
+
+<script>
+let slides = document.querySelectorAll('.slide');
+let s = 0;
+setInterval(() => {
+    slides[s].classList.remove('active');
+    s = (s + 1) % slides.length;
+    slides[s].classList.add('active');
+}, 3500);
+</script>
+
+</body>
+</html>

@@ -33,7 +33,7 @@ def role_required(allowed_roles):
 # ---- Головна (статичний сайт) ----
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("home.html")
 
 # ---- Реєстрація (звичайні користувачі) ----
 @app.route('/register', methods=['GET', 'POST'])
