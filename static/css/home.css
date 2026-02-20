@@ -1,160 +1,450 @@
 * {
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Segoe UI;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-background:#EAF3FA;
-color:#0F1B2D;
+    background: #CBE3F5;
+    color: #1a1a1a;
 }
 
-.toolbar {
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 60px;
-background:white;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
-position:sticky;
-top:0;
-z-index:10;
+/* TOP BAR */
+.top-bar {
+    background: #0E1A4D;
+    overflow: hidden;
+    padding: 12px 0;
 }
 
-nav a {
-margin:0 15px;
-text-decoration:none;
-color:#0F1B2D;
+.marquee {
+    width: 100%;
+    overflow: hidden;
 }
 
-.auth a {
-margin-left:10px;
-padding:8px 16px;
-border-radius:20px;
-text-decoration:none;
+.marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 140px;            /* 🔥 великий красивий відступ */
+    white-space: nowrap;
+    animation: scroll 25s linear infinite;
 }
 
-.login {border:1px solid #0F1B2D;}
-.register {background:#0F1B2D;color:white;}
+.marquee-track span {
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
 
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 0 60px;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+    display: block;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #0E1A4D;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+/* КНОПКИ */
+
+.nav-buttons a {
+    display: inline-block;   /* ВАЖЛИВО */
+    padding: 12px 30px;
+    border-radius: 25px;
+    border: 1px solid #0E1A4D;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s ease;
+    margin-left: 10px;
+    text-decoration: none;   /* прибирає підкреслення */
+}
+
+/* Вхід */
+.nav-buttons .login {
+    background: #0E1A4D;
+    color: #ffffff;
+}
+
+/* Реєстрація */
+.nav-buttons .register {
+    background: #0E1A4D;
+    color: #ffffff;
+}
+
+/* Hover */
+.nav-buttons a:hover {
+    opacity: 0.85;
+}
+
+/* HERO */
 .hero {
-height:85vh;
-background:url("https://images.unsplash.com/photo-1605100804763-247f67b3557e") center/cover;
-display:flex;
-align-items:center;
-padding-left:80px;
+    height: 650px;
+    display: flex;
+    align-items: center;
+    padding-left: 120px;
+    position: relative;
+
+    background-image: url("../images/hero.png");
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
 }
 
+/* легке затемнення тільки для фото */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(203, 227, 245, 0.95) 0%,
+        rgba(203, 227, 245, 0.85) 40%,
+        rgba(203, 227, 245, 0.0) 70%
+    );
+}
+
+/* щоб текст був поверх затемнення */
 .hero-content {
-background:rgba(255,255,255,.9);
-padding:50px;
-border-radius:30px;
-max-width:550px;
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
 }
 
-.hero-buttons a {
-margin-right:15px;
+.hero-content h1 {
+    font-size: 56px;
+    font-weight: 400;
+    font-style: italic;   
+    margin-bottom: 25px;
+    line-height: 1.1;
 }
 
-.btn-main {
-background:#0F1B2D;
-color:white;
-padding:12px 25px;
-border-radius:25px;
-text-decoration:none;
+.hero-content p {
+    font-size: 20px;
+    font-style: italic;   
+    margin-bottom: 35px;
+    line-height: 1.5;
+}
+.hero-content button {
+    background: #0E1A4D;
+    color: white;
+    padding: 25px 180px;
+    border-radius: 35px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-.btn-second {
-border:1px solid #0F1B2D;
-padding:12px 25px;
-border-radius:25px;
-text-decoration:none;
-color:#0F1B2D;
+.hero-content button:hover {
+    background: #1c2f80;
+    transform: translateY(-2px);
 }
 
-.slider, .products, .video-section, .about {
-padding:80px 10%;
-text-align:center;
+
+/* CATEGORIES */
+.categories {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px 60px;
+    background: #CBE3F5; /* як на скріні */
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.slider-box {
-position:relative;
-height:420px;
-margin-top:40px;
+.category {
+    flex: 1;
+    text-align: center;
 }
 
-.slide {
-position:absolute;
-width:100%;
-height:100%;
-object-fit:cover;
-opacity:0;
-transition:.8s;
-border-radius:30px;
+.category img {
+    width: 230px;        /* великі кола */
+    height: 230px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: 0.3s ease;
 }
 
-.slide.active {opacity:1;}
-
-.grid {
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:30px;
-margin-top:40px;
+/* затемняється ТІЛЬКИ фото */
+.category img:hover {
+    filter: brightness(0.85);
+    transform: scale(1.04);
 }
 
-.product {
-background:white;
-padding:25px;
-border-radius:25px;
-box-shadow:0 10px 25px rgba(0,0,0,.1);
-transition:.3s;
+.category p {
+    margin-top: 25px;
+    font-size: 24px;
+    font-style: italic;
+    color: #1a1a1a;
 }
 
-.product:hover {transform:translateY(-8px);}
-
-.product img {
-width:100%;
-border-radius:20px;
+/* CUSTOM */
+.custom-light {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 
-.product button {
-margin-top:15px;
-padding:10px;
-border:none;
-background:#0F1B2D;
-color:white;
-border-radius:20px;
-cursor:pointer;
+.custom-light-img {
+    width: 100%;
+    height: 90vh;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
-.video-box {
-margin-top:40px;
-max-width:900px;
-margin-left:auto;
-margin-right:auto;
+/* Контент поверх фото */
+.custom-light-content {
+    position: absolute;
+    top: 100px;
+    left: 120px;
+    max-width: 560px;
+    color: #1a1a1a; /* чорний текст */
 }
 
-.video-box video {
-width:100%;
-border-radius:30px;
-box-shadow:0 15px 35px rgba(0,0,0,.2);
+/* Заголовок */
+.custom-light-content h2 {
+    font-size: 52px;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    font-weight: 600;
 }
 
-.about {
-display:flex;
-align-items:center;
-gap:50px;
-text-align:left;
+/* Текст */
+.custom-light-content p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 40px;
 }
 
-.about img {
-width:45%;
-border-radius:30px;
+/* Кнопка */
+.custom-light-content button {
+    background: #0E1A4D;
+    color: white;
+    padding: 24px 90px;
+    border-radius: 60px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-footer {
-text-align:center;
-padding:30px;
-background:white;
+.custom-light-content button:hover {
+    background: #162873;
+    transform: translateY(-3px);
+}
+
+
+/* SECTION */
+.best {
+    padding: 80px 120px;
+    background: #CBE3F5;
+}
+
+.best-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.best-header h2 {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+/* ===================== */
+/*       SLIDER          */
+/* ===================== */
+
+.slider-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.products {
+    display: flex;
+    gap: 40px;
+    transition: transform 0.4s ease;
+}
+
+/* 4 картки */
+.product-card {
+    flex: 0 0 calc(25% - 30px);
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.product-card h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.product-card p {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* ===================== */
+/*        ARROWS         */
+/* ===================== */
+
+.arrow {
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.arrow.left {
+    left: 10px;
+}
+
+.arrow.right {
+    right: 10px;
+}
+
+.arrow:disabled {
+    opacity: 0.3;
+}
+
+/* ADVANTAGES */
+.advantages {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.advantages-img {
+    width: 100%;
+    
+}
+/* FOOTER */
+.footer {
+    background: #0E1A4D;
+    color: white;
+    padding: 40px 80px 20px 80px; /* ще менше */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Ліва частина */
+
+.footer-left {
+    max-width: 500px;
+}
+
+.footer-left h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.footer-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.footer-contacts h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.footer-contacts p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Логотип */
+
+.footer-logo-img {
+    width: 180px;   /* менший */
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Нижній блок — строго внизу */
+
+.footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.footer-bottom p {
+    margin-bottom: 5px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #0E1A4D;
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    line-height: 55px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+    z-index: 9999;
+}
+
+.scroll-top:hover {
+    transform: translateY(-4px);
 }

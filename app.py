@@ -96,7 +96,7 @@ def logout():
 @app.route('/user/home')
 @role_required(['user'])
 def user_home():
-    return render_template("user_home.html")
+    return render_template("home.html")
 
 # ---- Простий API для перевірки (необов'язково) ----
 @app.route('/profile')
