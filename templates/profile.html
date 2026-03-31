@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Профіль | S Diamond</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">
+        <a href="{{ url_for('user_home') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}">
+        </a>
+    </div>
+
+    <nav class="nav-links">
+        <a href="{{ url_for('catalog') }}">Каталог</a>
+        <a href="{{ url_for('custom_design') }}">Індивідуальне замовлення</a>
+        <a href="{{ url_for('about') }}">Про нас</a>
+        <a href="{{ url_for('contacts') }}">Контакти</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="{{ url_for('logout') }}" class="login">Вийти</a>
+    </div>
+</header>
+
+
+<section class="profile-wrapper">
+
+    <!-- SIDEBAR -->
+    <div class="profile-sidebar">
+        <button class="tab-btn active" data-tab="info">Профіль</button>
+        <button class="tab-btn" data-tab="orders">Активні замовлення</button>
+        <button class="tab-btn" data-tab="cancelled">Скасовані</button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="profile-content">
+
+        <!-- INFO -->
+        <div class="tab-content active" id="info">
+            <h2>Особиста інформація</h2>
+
+            <form method="POST" action="{{ url_for('update_profile') }}" class="profile-card">
+
+                <label>Username</label>
+                <input type="text" name="username" value="{{ user.username }}" required>
+
+                <label>Email</label>
+                <input type="email" name="email" value="{{ user.email }}" required>
+
+                <hr>
+
+                <label>Поточний пароль</label>
+                <input type="password" name="current_password">
+
+                <label>Новий пароль</label>
+                <input type="password" name="new_password">
+
+                <button type="submit" class="luxury-btn">
+                    Зберегти зміни
+                </button>
+            </form>
+        </div>
+
+
+        <!-- ACTIVE ORDERS -->
+        <div class="tab-content" id="orders">
+            <h2>Активні замовлення</h2>
+
+            {% for order in active_orders %}
+            <div class="order-card">
+                <div>
+                    <h4>{{ order.custom_name }}</h4>
+                    <p>{{ order.material }} | {{ order.order_type }}</p>
+                </div>
+
+                <div class="order-actions">
+                    <span class="status">{{ order.status }}</span>
+
+                    {% if order.status != "готове до видачі" %}
+                    <form method="POST" action="{{ url_for('cancel_order', order_id=order._id) }}">
+                        <button type="submit" class="cancel-btn">Скасувати</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <p>Активних замовлень немає.</p>
+            {% endfor %}
+        </div>
+
+
+        <!-- CANCELLED -->
+        <div class="tab-content" id="cancelled">
+            <h2>Скасовані замовлення</h2>
+
+            {% for order in cancelled_orders %}
+            <div class="order-card cancelled">
+                <div>
+                    <h4>{{ order.custom_name }}</h4>
+                    <p>{{ order.material }} | {{ order.order_type }}</p>
+                </div>
+                <span class="status cancelled-status">Скасовано</span>
+            </div>
+            {% else %}
+            <p>Скасованих замовлень немає.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- JS -->
+<script>
+const buttons = document.querySelectorAll(".tab-btn");
+const contents = document.querySelectorAll(".tab-content");
+
+buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        contents.forEach(c => c.classList.remove("active"));
+        document.getElementById(btn.dataset.tab).classList.add("active");
+    });
+});
+</script>
+
+</body>
+</html>

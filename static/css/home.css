@@ -46,7 +46,8 @@ body {
     }
 }
 
-/* NAVBAR */
+/* ================= NAVBAR ================= */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -55,37 +56,64 @@ body {
     padding: 0 60px;
 }
 
+/* LOGO */
 .logo img {
     height: 70px;
     width: auto;
     display: block;
 }
 
+/* LINKS */
 .nav-links {
     display: flex;
-    gap: 25px;
+    gap: 30px;
 }
 
 .nav-links a {
+    position: relative;
     text-decoration: none;
     color: #0E1A4D;
     font-weight: 500;
     font-size: 18px;
+    padding: 5px 0;
+    transition: color 0.3s ease;
 }
 
-/* КНОПКИ */
+/* Luxury underline animation */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background: #0E1A4D;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #1c2f80;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+
+/* ================= BUTTONS ================= */
 
 .nav-buttons a {
-    display: inline-block;   /* ВАЖЛИВО */
-    padding: 12px 30px;
-    border-radius: 25px;
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 30px;
     border: 1px solid #0E1A4D;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    transition: 0.3s ease;
-    margin-left: 10px;
-    text-decoration: none;   /* прибирає підкреслення */
+    transition: all 0.3s ease;
+    margin-left: 12px;
+    text-decoration: none;
 }
 
 /* Вхід */
@@ -100,9 +128,11 @@ body {
     color: #ffffff;
 }
 
-/* Hover */
+/* Hover ефект кнопок */
 .nav-buttons a:hover {
-    opacity: 0.85;
+    background: #1c2f80;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
 /* HERO */
@@ -139,33 +169,43 @@ body {
     max-width: 520px;
 }
 
+/* Заголовок */
 .hero-content h1 {
     font-size: 56px;
     font-weight: 400;
-    font-style: italic;   
+    font-style: italic;
     margin-bottom: 25px;
     line-height: 1.1;
 }
 
+/* Текст */
 .hero-content p {
     font-size: 20px;
-    font-style: italic;   
+    font-style: italic;
     margin-bottom: 35px;
     line-height: 1.5;
 }
-.hero-content button {
+
+/* Кнопка */
+.hero-content a {
+    display: inline-block;
     background: #0E1A4D;
-    color: white;
-    padding: 25px 180px;
-    border-radius: 35px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s ease;
+    color: #ffffff;
+    padding: 18px 60px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 16px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.hero-content button:hover {
+/* Hover ефект */
+.hero-content a:hover {
     background: #1c2f80;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -246,22 +286,26 @@ body {
 }
 
 /* Кнопка */
-.custom-light-content button {
+.custom-light-content a {
+    display: inline-block;
     background: #0E1A4D;
-    color: white;
-    padding: 24px 90px;
+    color: #ffffff;
+    padding: 20px 80px;
     border-radius: 60px;
-    border: none;
+    text-decoration: none;
     font-size: 18px;
-    cursor: pointer;
-    transition: 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.custom-light-content button:hover {
+/* Hover */
+.custom-light-content a:hover {
     background: #162873;
     transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
-
 
 /* SECTION */
 .best {
@@ -447,4 +491,14 @@ html {
 
 .scroll-top:hover {
     transform: translateY(-4px);
+}
+
+
+#cartCount{
+background:#ff2929;
+color:white;
+border-radius:50%;
+padding:3px 7px;
+font-size:12px;
+margin-left:5px;
 }

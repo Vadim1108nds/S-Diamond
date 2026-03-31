@@ -1,164 +1,208 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>S-Diamond — Ювелірна Майстерня</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_home.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S Diamond</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
 
- <header>
-    <div class="header-texts">
-        <h1>💎 S-Diamond Ювелірна Майстерня</h1>
-        <p>Ексклюзивні вироби та кастомні прикраси</p>
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+
+            
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+        </div>
     </div>
-    <a href="{{ url_for('logout') }}" class="button">Вихід</a>
+</div>
+
+<!-- NAVIGATION -->
+<header class="navbar">
+   <div class="logo">
+    <a href="{{ url_for('user_home') }}">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="S Diamond">
+    </a>
+</div>
+
+    <nav class="nav-links">
+       <a href="{{ url_for('catalog') }}">Каталог</a>
+        <a href="{{ url_for('custom_design') }}">Індивідуальне замовлення</a>
+        <a href="{{ url_for('about') }}">Про нас</a>
+        <a href="{{ url_for('contacts') }}">Контакти</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="{{ url_for('profile_page') }}" class="login">Профіль</a>
+        <a href="{{ url_for('cart') }}" class="register">Кошик<span id="cartCount">{{ cart_count }}</span></a>
+    </div>
 </header>
 
- 
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Досконалість у кожній деталі</h1>
+        <p>
+            Вишукане золоте кільце з натуральним каменем —
+            символ статусу та впевненості.
+        </p>
+        <a href="{{ url_for('catalog') }}" class="hero-btn">
+    Дізнатися більше
+</a>
+    </div>
+</section>
 
-  <!-- --- Popup / модальне повідомлення --- -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <div id="modal-overlay" class="modal-overlay show">
-        <div class="modal">
-          {% for category, message in messages %}
-            <p class="{{ category }}">{{ message }}</p>
-          {% endfor %}
-          <button class="close-modal" onclick="closeModal()">Закрити</button>
+<!-- CATEGORIES -->
+<section class="categories">
+    <div class="category">
+        <img src="{{ url_for('static', filename='images/ring.jpg') }}" alt="Кільця">
+        <p>Кільця</p>
+    </div>
+
+    <div class="category">
+        <img src="{{ url_for('static', filename='images/pidvis.jpg') }}" alt="Підвіски">
+        <p>Підвіски</p>
+    </div>
+
+    <div class="category">
+        <img src="{{ url_for('static', filename='images/braslet.jpg') }}" alt="Браслети">
+        <p>Браслети</p>
+    </div>
+
+    <div class="category">
+        <img src="{{ url_for('static', filename='images/sereshka.jpg') }}" alt="Сережки">
+        <p>Сережки</p>
+    </div>
+</section>
+
+<!-- CUSTOM DESIGN -->
+<section class="custom-light">
+    <img src="/static/images/custom.png" class="custom-light-img" alt="Custom">
+
+    <div class="custom-light-content">
+        <h2>Індивідуальний дизайн прикрас</h2>
+        <p>
+            Створюємо вироби, що відображають саме вашу історію —
+            витонченість у кожній деталі.
+        </p>
+        </p>
+        <a href="{{ url_for('custom_design') }}" class="hero-btn">
+    Дізнатися більше
+</a>
+    </div>
+</section>
+<!-- BEST PRODUCTS -->
+<section class="best">
+    <div class="best-header">
+        <h2>Кращі вироби</h2>
+        <a href="#" class="more-link">Більше ›</a>
+    </div>
+
+    <div class="slider-wrapper">
+
+        <button class="arrow left">&#10094;</button>
+
+        <div class="products" id="productSlider">
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <!-- Додаткові для листання -->
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Golden Grace</h4>
+                <p>22 500 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Emerald Shine</h4>
+                <p>25 000 грн</p>
+            </div>
+
         </div>
-      </div>
-    {% endif %}
-  {% endwith %}
 
-  <script>
-    function closeModal() {
-      const overlay = document.getElementById('modal-overlay');
-      if (overlay) {
-        overlay.style.opacity = '0';
-        overlay.style.transition = 'opacity 0.3s';
-        setTimeout(() => overlay.remove(), 300);
-      }
-    }
-    window.addEventListener('DOMContentLoaded', () => {
-      const overlay = document.getElementById('modal-overlay');
-      if (overlay) setTimeout(closeModal, 4000);
-    });
-  </script>
+        <button class="arrow right">&#10095;</button>
 
-  <main>
-    <!-- Готові вироби -->
-    <section class="ready-items">
-      <h2>Готові вироби</h2>
-      <div class="grid">
-        <!-- Виріб 1 -->
-        <div class="card">
-          <img src="{{ url_for('static', filename='images/ring1.jpg') }}" alt="Каблучка Елеганс">
-          <h3>Каблучка "Елеганс"</h3>
-          <p>Тип: Каблучка</p>
-          <p>Метал: Золото</p>
-          <p>Камінь: Діамант</p>
-          <p class="price">12 500 грн</p>
-          <form action="/create_order" method="POST">
-            <input type="hidden" name="order_type" value="стандартне">
-            <input type="hidden" name="item" value="Каблучка">
-            <input type="hidden" name="material" value="Золото">
-            <input type="hidden" name="stone" value="Діамант">
-            <input type="hidden" name="custom_name" value="Каблучка Елеганс">
-            <input type="text" name="customer_name" placeholder="Ваше ім’я" required>
-            <input type="text" name="customer_phone" placeholder="Телефон" required>
-            <button type="submit">Замовити</button>
-          </form>
+    </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="advantages">
+    <img src="{{ url_for('static', filename='images/advent.png') }}" 
+         alt="Переваги" 
+         class="advantages-img">
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-left">
+            <h2>S Diamond</h2>
+
+            <p class="footer-description">
+                Створюємо ювелірні прикраси з характером.
+                Індивідуальний дизайн та бездоганна якість.
+            </p>
+
+            <div class="footer-contacts">
+                <h3>Контакти</h3>
+                <p>Телефон: +38 (0XX) XXX XX XX</p>
+                <p>Email: info@brand.ua</p>
+                <p>Instagram: @brand</p>
+                <p>Адреса: м. Київ</p>
+            </div>
         </div>
 
-        <!-- Виріб 2 -->
-        <div class="card">
-          <img src="{{ url_for('static', filename='images/ring1.jpg') }}" alt="Кулон Софія">
-          <h3>Кулон "Софія"</h3>
-          <p>Тип: Кулон</p>
-          <p>Метал: Срібло</p>
-          <p>Камінь: Смарагд</p>
-          <p class="price">8 500 грн</p>
-          <form action="/create_order" method="POST">
-            <input type="hidden" name="order_type" value="стандартне">
-            <input type="hidden" name="item" value="Кулон">
-            <input type="hidden" name="material" value="Срібло">
-            <input type="hidden" name="stone" value="Смарагд">
-            <input type="hidden" name="custom_name" value="Кулон Софія">
-            <input type="text" name="customer_name" placeholder="Ваше ім’я" required>
-            <input type="text" name="customer_phone" placeholder="Телефон" required>
-            <button type="submit">Замовити</button>
-          </form>
+        <div class="footer-right">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                 alt="S Diamond" 
+                 class="footer-logo-img">
         </div>
+         <div class="footer-bottom">
+        <p>2026 S Diamond . Усі права захищені.</p>
+        <p>Політика конфіденційності | Публічна оферта</p>
+    </div>
 
-        <!-- Виріб 3 -->
-        <div class="card">
-          <img src="{{ url_for('static', filename='images/ring1.jpg') }}" alt="Браслет Королівський">
-          <h3>Браслет "Королівський"</h3>
-          <p>Тип: Браслет</p>
-          <p>Метал: Платина</p>
-          <p>Камінь: Сапфір</p>
-          <p class="price">18 900 грн</p>
-          <form action="/create_order" method="POST">
-            <input type="hidden" name="order_type" value="стандартне">
-            <input type="hidden" name="item" value="Браслет">
-            <input type="hidden" name="material" value="Платина">
-            <input type="hidden" name="stone" value="Сапфір">
-            <input type="hidden" name="custom_name" value="Браслет Королівський">
-            <input type="text" name="customer_name" placeholder="Ваше ім’я" required>
-            <input type="text" name="customer_phone" placeholder="Телефон" required>
-            <button type="submit">Замовити</button>
-          </form>
-        </div>
-      </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- Кастомне замовлення -->
-    <section class="custom-order">
-      <h2>Створи кастомне замовлення</h2>
-      <form action="/create_order" method="POST" class="custom-form">
-        <input type="hidden" name="order_type" value="кастомне">
+    
 
-        <label>Тип виробу:</label>
-        <select name="item" required>
-          <option>Каблучка</option>
-          <option>Кулон</option>
-          <option>Браслет</option>
-          <option>Сережки</option>
-        </select>
 
-        <label>Матеріал:</label>
-        <select name="material" required>
-          <option>Золото</option>
-          <option>Срібло</option>
-          <option>Платина</option>
-        </select>
+<a href="#top" class="scroll-top">&#8679;</a>
+<script src="{{ url_for('static', filename='js/slider.js') }}"></script>
 
-        <label>Камінь (необов’язково):</label>
-        <select name="stone">
-          <option value="">Без каменю</option>
-          <option>Діамант</option>
-          <option>Смарагд</option>
-          <option>Сапфір</option>
-          <option>Рубін</option>
-        </select>
-
-        <label>Назва виробу:</label>
-        <input type="text" name="custom_name" placeholder="Введіть назву" required>
-
-        <label>Ваше ім’я:</label>
-        <input type="text" name="customer_name" required>
-
-        <label>Телефон:</label>
-        <input type="text" name="customer_phone" required>
-
-        <button type="submit">Створити замовлення</button>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 S-Diamond | Ювелірна майстерня</p>
-  </footer>
 </body>
 </html>

@@ -1,14 +1,15 @@
 import os
 from functools import wraps
+from datetime import datetime
+from flask import jsonify
+
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
-from datetime import datetime
 
-
-# Load .env if present
+# ---- Load environment ----
 load_dotenv()
 
 app = Flask(__name__)
@@ -17,38 +18,50 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "change_this_secret")
 
 mongo = PyMongo(app)
 
-# ---- Utility: decorator для перевірки ролі ----
+# ================= DECORATOR =================
 def role_required(allowed_roles):
     def decorator(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
             role = session.get("role")
             if role not in allowed_roles:
-                flash("Доступ заборонено. Увійдіть з відповідною роллю.")
                 return redirect(url_for("login"))
             return f(*args, **kwargs)
         return wrapped
     return decorator
 
-# ---- Головна (статичний сайт) ----
+
+# ================= HOME =================
 @app.route('/')
-def index():
+def home():
     return render_template("home.html")
 
-# ---- Реєстрація (звичайні користувачі) ----
+@app.context_processor
+def inject_cart_count():
+
+    cart_count = 0
+
+    if "user_id" in session:
+        cart_count = mongo.db.cart.count_documents({
+            "user_id": session["user_id"]
+        })
+
+    return dict(cart_count=cart_count)
+
+# ================= REGISTER =================
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        email = request.form.get('email', '').strip()
-        password = request.form.get('password', '')
+        username = request.form.get('username').strip()
+        email = request.form.get('email').strip()
+        password = request.form.get('password')
 
         if not username or not email or not password:
             flash("Заповніть усі поля.")
             return redirect(url_for('register'))
 
         if mongo.db.users.find_one({"username": username}):
-            flash("Користувач з таким username вже існує.")
+            flash("Користувач вже існує.")
             return redirect(url_for('register'))
 
         mongo.db.users.insert_one({
@@ -57,133 +70,278 @@ def register():
             "password_hash": generate_password_hash(password),
             "role": "user"
         })
-        flash("Реєстрація успішна! Увійдіть, будь ласка.")
+
+        flash("Реєстрація успішна!")
         return redirect(url_for('login'))
 
     return render_template("register.html")
 
-# ---- Логін ----
+
+# ================= LOGIN =================
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        password = request.form.get('password', '')
+        username = request.form.get('username').strip()
+        password = request.form.get('password')
 
         user = mongo.db.users.find_one({"username": username})
-        if user and check_password_hash(user.get("password_hash",""), password):
-            session['user_id'] = str(user.get("_id"))
-            session['username'] = user.get("username")
-            session['role'] = user.get("role")
-            flash("Успішний вхід.")
-            # Редірект за роллю
-            if user.get("role") == "admin":
+
+        if user and check_password_hash(user['password_hash'], password):
+            session['user_id'] = str(user['_id'])
+            session['username'] = user['username']
+            session['role'] = user['role']
+
+            if user['role'] == "admin":
                 return redirect(url_for('admin_home'))
+
             return redirect(url_for('user_home'))
+
         flash("Невірний логін або пароль.")
         return redirect(url_for('login'))
 
     return render_template("login.html")
 
-# ---- Вихід ----
+
+# ================= LOGOUT =================
 @app.route('/logout')
 def logout():
     session.clear()
-    flash("Вихід виконано.")
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 
-
+# ================= USER HOME =================
 @app.route('/user/home')
 @role_required(['user'])
 def user_home():
-    return render_template("home.html")
+    return render_template("user_home.html")
 
-# ---- Простий API для перевірки (необов'язково) ----
+
+# ================= PROFILE =================
 @app.route('/profile')
-def profile():
-    if 'user_id' not in session:
-        flash("Увійдіть, щоб бачити профіль.")
-        return redirect(url_for('login'))
-    return {
-        "user_id": session.get("user_id"),
-        "username": session.get("username"),
-        "role": session.get("role")
-    }
-@app.route('/create_order', methods=['POST'])
 @role_required(['user'])
-def create_order():
+def profile_page():
     user_id = session.get('user_id')
-    username = session.get('username')
 
-    order_type = request.form.get('order_type')  # "стандартне" або "кастомне"
-    item = request.form.get('item')
-    material = request.form.get('material')
-    stone = request.form.get('stone', '')
-    custom_name = request.form.get('custom_name', '')
-    customer_name = request.form.get('customer_name')
-    customer_phone = request.form.get('customer_phone')
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
 
-    # Перевірка обов'язкових полів
-    if not all([order_type, item, material, customer_name, customer_phone, custom_name]):
-        flash("Заповніть усі обов'язкові поля.")
-        return redirect(url_for('user_home'))
+    active_orders = list(
+        mongo.db.orders.find({
+            "user_id": user_id,
+            "status": {"$ne": "скасовано"}
+        }).sort("created_at", -1)
+    )
 
-    # Створюємо документ для MongoDB
-    order_doc = {
-        "user_id": user_id,
-        "username": username,
-        "order_type": order_type,
-        "item": item,
-        "material": material,
-        "stone": stone,
-        "custom_name": custom_name,
-        "customer_name": customer_name,
-        "customer_phone": customer_phone,
-        "status": "нове замовлення", 
-        "created_at": datetime.utcnow()
-    }
+    cancelled_orders = list(
+        mongo.db.orders.find({
+            "user_id": user_id,
+            "status": "скасовано"
+        }).sort("created_at", -1)
+    )
 
-    mongo.db.orders.insert_one(order_doc)
-    flash(f"Замовлення '{custom_name}' успішно створено!", "success")
+    return render_template(
+        "profile.html",
+        user=user,
+        active_orders=active_orders,
+        cancelled_orders=cancelled_orders
+    )
+
+
+# ================= CANCEL ORDER =================
+@app.route('/cancel_order/<order_id>', methods=['POST'])
+@role_required(['user'])
+def cancel_order(order_id):
+    user_id = session.get('user_id')
+
+    mongo.db.orders.update_one(
+        {
+            "_id": ObjectId(order_id),
+            "user_id": user_id
+        },
+        {
+            "$set": {
+                "status": "скасовано",
+                "cancelled_at": datetime.utcnow()
+            }
+        }
+    )
+
+    flash("Замовлення скасовано")
+    return redirect(url_for('profile_page'))
+
+
+# ================= UPDATE PROFILE =================
+@app.route('/update_profile', methods=['POST'])
+@role_required(['user'])
+def update_profile():
+    user_id = session.get('user_id')
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+
+    new_username = request.form.get('username')
+    new_email = request.form.get('email')
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+
+    update_data = {}
+
+    if new_username and new_username != user['username']:
+        update_data['username'] = new_username
+        session['username'] = new_username
+
+    if new_email and new_email != user['email']:
+        update_data['email'] = new_email
+
+    if new_password:
+        if not current_password:
+            flash("Введіть поточний пароль.")
+            return redirect(url_for('profile_page'))
+
+        if not check_password_hash(user['password_hash'], current_password):
+            flash("Невірний поточний пароль.")
+            return redirect(url_for('profile_page'))
+
+        update_data['password_hash'] = generate_password_hash(new_password)
+
+    if update_data:
+        mongo.db.users.update_one(
+            {"_id": ObjectId(user_id)},
+            {"$set": update_data}
+        )
+        flash("Дані оновлено!")
+
+    return redirect(url_for('profile_page'))
+
+
+# ================= CREATE ORDER =================
+
     return redirect(url_for('user_home'))
 
-# --- Адмінка ---
-# --- Адмінська панель ---
+
+# ================= ADMIN =================
 @app.route('/admin/home')
 @role_required(['admin'])
 def admin_home():
     orders = list(mongo.db.orders.find().sort('created_at', -1))
     users = list(mongo.db.users.find().sort('username', 1))
     users_count = mongo.db.users.count_documents({})
-    return render_template('admin_home.html', orders=orders, users=users, users_count=users_count)
 
-@app.route('/update_order_status/<order_id>', methods=['POST'])
-@role_required(['admin'])
-def update_order_status(order_id):
-    new_status = request.form.get('status')
-    if new_status not in ["нове замовлення", "в роботі", "неможливе", "готове до видачі"]:
-        flash("Некоректний статус!", "error")
+    return render_template(
+        'admin_home.html',
+        orders=orders,
+        users=users,
+        users_count=users_count
+    )
+
+
+# ================= STATIC PAGES =================
+@app.route("/catalog")
+def catalog():
+
+    query = {}
+
+    type_ = request.args.get("type")
+    material = request.args.get("material")
+    stone = request.args.get("stone")
+
+    min_price = request.args.get("min", type=int)
+    max_price = request.args.get("max", type=int)
+
+    if type_:
+        query["type"] = type_
+
+    if material:
+        query["material"] = material
+
+    if stone:
+        query["stone"] = {"$in": [stone]}
+
+    if min_price is not None and max_price is not None:
+        query["price"] = {
+            "$gte": min_price,
+            "$lte": max_price
+        }
+
+    products = list(mongo.db.products.find(query))
+
+    # 🔥 ДОДАТИ ЦЕ
+    cart_count = 0
+    if "user_id" in session:
+        cart_count = mongo.db.cart.count_documents({
+            "user_id": session["user_id"]
+        })
+
+    return render_template(
+        "catalog.html",
+        products=products,
+        cart_count=cart_count
+    )
+
+
+
+@app.route("/add_to_cart", methods=["POST"])
+def add_to_cart():
+
+    if "user_id" not in session:
+        return jsonify({"error": "not_logged"}), 401
+
+    data = request.json
+    product_id = data.get("product_id")
+
+    # 🔥 ВАЖЛИВО: string → ObjectId
+    product_id = ObjectId(product_id)
+
+    user_id = session["user_id"]
+
+    # 🔥 перевіряємо чи вже є товар
+    existing = mongo.db.cart.find_one({
+        "user_id": user_id,
+        "product_id": product_id
+    })
+
+    if existing:
+        # якщо є → +1
+        mongo.db.cart.update_one(
+            {"_id": existing["_id"]},
+            {"$inc": {"qty": 1}}
+        )
     else:
-        mongo.db.orders.update_one({'_id': ObjectId(order_id)}, {'$set': {'status': new_status}})
-        flash(f"Статус замовлення оновлено на '{new_status}'", "success")
-    return redirect(url_for('admin_home'))
+        # якщо нема → додаємо
+        mongo.db.cart.insert_one({
+            "user_id": user_id,
+            "product_id": product_id,
+            "qty": 1
+        })
 
-@app.route('/delete_order/<order_id>', methods=['POST'])
-@role_required(['admin'])
-def delete_order(order_id):
-    mongo.db.orders.delete_one({'_id': ObjectId(order_id)})
-    flash("Замовлення успішно видалено.", "success")
-    return redirect(url_for('admin_home'))
+    # 🔥 рахуємо кількість товарів
+    count = mongo.db.cart.count_documents({
+        "user_id": user_id
+    })
 
-@app.route('/delete_user/<user_id>', methods=['POST'])
-@role_required(['admin'])
-def delete_user(user_id):
-    mongo.db.users.delete_one({'_id': ObjectId(user_id)})
-    flash("Користувача успішно видалено.", "success")
-    return redirect(url_for('admin_home'))
+    return jsonify({
+        "success": True,
+        "count": count
+    })
 
-
+@app.route('/custom-design')
+def custom_design():
+    return render_template("custom_design.html")
 
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+
+@app.route('/contacts')
+def contacts():
+    return render_template("contacts.html")
+
+
+@app.route('/cart')
+@role_required(['user'])
+def cart():
+    return render_template("cart.html")
+
+
+# ================= RUN =================
 if __name__ == '__main__':
     app.run(debug=True)

@@ -17,7 +17,7 @@
             <span>Знижки до -30%</span>
             <span>Знижки до -30%</span>
 
-            <!-- дубль для безшовного циклу -->
+            
             <span>Знижки до -30%</span>
             <span>Знижки до -30%</span>
             <span>Знижки до -30%</span>
@@ -28,15 +28,17 @@
 
 <!-- NAVIGATION -->
 <header class="navbar">
-   <div class="logo">
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="S Diamond">
+    <div class="logo">
+    <a href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="S Diamond">
+    </a>
 </div>
 
     <nav class="nav-links">
-        <a href="#">Каталог</a>
-        <a href="#">Індивідуальне замовлення</a>
-        <a href="#">Про нас</a>
-        <a href="#">Контакти</a>
+       <a href="{{ url_for('catalog') }}">Каталог</a>
+        <a href="{{ url_for('custom_design') }}">Індивідуальне замовлення</a>
+        <a href="{{ url_for('about') }}">Про нас</a>
+        <a href="{{ url_for('contacts') }}">Контакти</a>
     </nav>
 
     <div class="nav-buttons">
@@ -53,7 +55,9 @@
             Вишукане золоте кільце з натуральним каменем —
             символ статусу та впевненості.
         </p>
-        <button>Дізнатись більше</button>
+        <a href="{{ url_for('catalog') }}" class="hero-btn">
+    Дізнатися більше
+</a>
     </div>
 </section>
 
@@ -90,7 +94,10 @@
             Створюємо вироби, що відображають саме вашу історію —
             витонченість у кожній деталі.
         </p>
-        <button>Дізнатися більше</button>
+        </p>
+        <a href="{{ url_for('custom_design') }}" class="hero-btn">
+    Дізнатися більше
+</a>
     </div>
 </section>
 <!-- BEST PRODUCTS -->
