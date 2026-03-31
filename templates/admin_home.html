@@ -1,110 +1,162 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>Адмінська панель</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_home.css') }}">
+<meta charset="UTF-8">
+<title>Адмінська панель</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_home.css') }}">
+
 </head>
 <body>
+
 <div class="container">
-    <header>
-        <h1>Адмінська панель S-Diamond</h1>
-        <nav class="top-nav">
-          <a href="#users" class="button">Користувачі</a>
+
+<header>
+    <h1>Адмінська панель S-Diamond</h1>
+
+    <nav class="top-nav">
+        <a href="#users" class="button">Користувачі</a>
         <a href="#orders" class="button">Замовлення</a>
-            <a href="{{ url_for('logout') }}" class="button">Вихід</a>
-        </nav>
-    </header>
+        <a href="#add-product" class="button">Товари</a>
+        <a href="{{ url_for('logout') }}" class="button logout">Вихід</a>
+    </nav>
+</header>
 
-    <section class="stats">
-        <div class="card">
-            <h3>Кількість користувачів</h3>
-            <p>{{ users_count }}</p>
-        </div>
-    </section>
+<!-- STATS -->
+<section class="stats">
+    <div class="card">
+        <h3>Користувачі</h3>
+        <p>{{ users_count }}</p>
+    </div>
+</section>
 
-    
+<!-- USERS -->
+<section id="users" class="block">
+    <h2>Користувачі</h2>
 
-    <!-- Користувачі -->
-    <section id="users" class="users">
-        <h2>Список користувачів</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Роль</th>
-                    <th>Дія</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>
-                        {% if user.role != 'admin' %}
-                        <form action="{{ url_for('delete_user', user_id=user._id) }}" method="POST" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Ви впевнені, що хочете видалити користувача?');">Видалити</button>
-                        </form>
-                        {% else %}
-                        -
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Роль</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
 
-    <!-- Замовлення -->
-    <section id="orders" class="orders">
-        <h2>Усі замовлення</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Ім’я клієнта</th>
-                    <th>Телефон</th>
-                    <th>Виріб</th>
-                    <th>Матеріал</th>
-                    <th>Камінь</th>
-                    <th>Назва</th>
-                    <th>Статус</th>
-                    <th>Дата</th>
-                    <th>Дії</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in orders %}
-                <tr>
-                    <td>{{ order.customer_name }}</td>
-                    <td>{{ order.customer_phone }}</td>
-                    <td>{{ order.item }}</td>
-                    <td>{{ order.material }}</td>
-                    <td>{{ order.stone or '-' }}</td>
-                    <td>{{ order.custom_name }}</td>
-                    <td>
-                        <form action="{{ url_for('update_order_status', order_id=order._id) }}" method="POST" style="display:inline;">
-                            <select name="status" class="status-select {% if order.status=='нове замовлення' %}new{% elif order.status=='в роботі' %}working{% elif order.status=='неможливе' %}cancel{% elif order.status=='готове до видачі' %}ready{% endif %}">
-                                <option value="нове замовлення" {% if order.status=='нове замовлення' %}selected{% endif %}>Нове замовлення</option>
-                                <option value="в роботі" {% if order.status=='в роботі' %}selected{% endif %}>В роботі</option>
-                                <option value="неможливе" {% if order.status=='неможливе' %}selected{% endif %}>Неможливе</option>
-                                <option value="готове до видачі" {% if order.status=='готове до видачі' %}selected{% endif %}>Готове до видачі</option>
-                            </select>
-                            <button type="submit" class="update-btn">Оновити</button>
-                        </form>
-                        <form action="{{ url_for('delete_order', order_id=order._id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="delete-btn" onclick="return confirm('Ви впевнені, що хочете видалити замовлення?');">Видалити</button>
-                        </form>
-                    </td>
-                    <td>{{ order.created_at.strftime("%d-%m-%Y %H:%M") }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+
+                <td>
+                    <form action="{{ url_for('delete_user', user_id=user._id) }}" method="POST">
+                        <button class="delete-btn">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- ORDERS -->
+<section id="orders" class="block">
+    <h2>Замовлення</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ім’я</th>
+                <th>Телефон</th>
+                <th>Виріб</th>
+                <th>Матеріал</th>
+                <th>Камінь</th>
+                <th>Назва</th>
+                <th>Статус</th>
+                <th>Дата</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.customer_name }}</td>
+            <td>{{ order.customer_phone }}</td>
+            <td>{{ order.item }}</td>
+            <td>{{ order.material }}</td>
+            <td>{{ order.stone or '-' }}</td>
+            <td>{{ order.custom_name }}</td>
+
+            <td>
+                <form action="{{ url_for('update_order_status', order_id=order._id) }}" method="POST">
+                    <select name="status">
+                        <option value="нове замовлення">Нове</option>
+                        <option value="в роботі">В роботі</option>
+                        <option value="неможливе">Неможливе</option>
+                        <option value="готове до видачі">Готове</option>
+                    </select>
+                    <button class="update-btn">OK</button>
+                </form>
+            </td>
+
+            <td>{{ order.created_at.strftime("%d-%m-%Y") }}</td>
+
+            <td>
+                <form action="{{ url_for('delete_order', order_id=order._id) }}" method="POST">
+                    <button class="delete-btn">Видалити</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- ADD PRODUCT -->
+<section id="add-product" class="block">
+    <h2>Додати товар</h2>
+
+    <form action="{{ url_for('add_product') }}" method="POST" enctype="multipart/form-data" class="product-form">
+
+        <input type="text" name="name" placeholder="Назва" required>
+
+        <select name="type">
+            <option value="ring">Кільце</option>
+            <option value="earrings">Сережки</option>
+            <option value="bracelet">Браслет</option>
+            <option value="pendant">Підвіска</option>
+        </select>
+
+        <select name="material">
+            <option value="gold">Золото</option>
+            <option value="silver">Срібло</option>
+            <option value="platinum">Платина</option>
+        </select>
+
+        <select name="stone">
+            <option value="diamond">Діамант</option>
+            <option value="ruby">Рубін</option>
+            <option value="sapphire">Сапфір</option>
+            <option value="amethyst">Аметист</option>
+        </select>
+
+        <input type="number" name="price" placeholder="Ціна" required>
+        <input type="number" name="weight" placeholder="Вага">
+
+        <textarea name="description" placeholder="Опис"></textarea>
+
+        <input type="file" name="image" required>
+
+        <button type="submit" class="add-btn">Додати товар</button>
+
+    </form>
+</section>
 
 </div>
+
 </body>
 </html>

@@ -1,230 +1,115 @@
-/* Загальні стилі */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fdf9f3;
-    color: #333;
-    margin: 0;
-    padding: 0;
+body{
+margin:0;
+font-family:Arial;
+background:#eef2f7;
 }
 
-.container {
-    width: 95%;
-    max-width: 1400px;
-    margin: auto;
-    padding: 20px 0;
+.container{
+width:90%;
+margin:auto;
+padding:30px;
 }
 
-/* --- Header --- */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(135deg, #fdf6e3, #fff6e0);
-    padding: 20px 40px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    border-radius: 12px;
-    margin-bottom: 30px;
+/* HEADER */
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
 }
 
-header h1 {
-    font-size: 2.2em;
-    color: #b88b4a;
-    margin: 0;
+.top-nav{
+display:flex;
+gap:15px;
 }
 
-.top-nav a.button {
-    background: #b88b4a;
-    color: #fff;
-    text-decoration: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    margin-left: 10px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+.button{
+background:#0a0a6a;
+color:white;
+padding:8px 16px;
+border-radius:20px;
+text-decoration:none;
 }
 
-.top-nav a.button:hover {
-    background: #a17a3f;
+.logout{
+background:#c0392b;
 }
 
-.top-nav a.exit {
-    background: #f44336;
+/* BLOCK */
+.block{
+margin-top:40px;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
-.top-nav a.exit:hover {
-    background: #d32f2f;
+/* TABLE */
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
 }
 
-/* --- Секції --- */
-.section {
-    background: #fff;
-    padding: 30px 35px;  /* трохи більше padding */
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    margin-bottom: 50px; /* збільшили відстань між секціями */
+th, td{
+padding:10px;
+border-bottom:1px solid #ddd;
+text-align:left;
 }
 
-.stats {
-    margin-bottom: 50px; /* додатковий простір перед наступною секцією */
+/* BUTTONS */
+.delete-btn{
+background:#e74c3c;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
 }
 
-.actions {
-    margin-bottom: 50px;
+.update-btn{
+background:#3498db;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
 }
 
-.orders {
-    margin-bottom: 50px;
-}
-/* --- Статистика користувачів --- */
-.stats .card {
-    display: inline-block;
-    width: 200px;
-    background: #fff6e6;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    text-align: center;
-    margin-right: 20px;
-    margin-bottom: 20px;
+.add-btn{
+background:#27ae60;
+color:white;
+border:none;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
 }
 
-.stats .card h3 {
-    margin: 0 0 10px 0;
-    color: #b88b4a;
-    font-size: 1.2em;
+/* FORM */
+.product-form{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:15px;
 }
 
-.stats .card p {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-.stats {
-    margin-bottom: 50px; /* додатковий простір перед наступною секцією */
-}
-
-/* --- Кнопки дій --- */
-.actions .nav-links a.button {
-    display: inline-block;
-    margin-right: 15px;
-    margin-bottom: 15px;
-    padding: 12px 25px;
-    font-weight: 600;
-    border-radius: 8px;
-    background: #b88b4a;
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.3s ease;
+.product-form input,
+.product-form select,
+.product-form textarea{
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
-.actions .nav-links a.button:hover {
-    background: #a17a3f;
+/* STATS */
+.stats{
+display:flex;
+gap:20px;
 }
 
-/* --- Таблиці замовлень --- */
-.table-wrapper {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    min-width: 1000px;
-    margin-top: 20px;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-th, td {
-    padding: 14px 18px;
-    text-align: left;
-    border-bottom: 1px solid #f0e3d1;
-    font-size: 0.95em;
-}
-
-th {
-    background-color: #f5f0e6;
-    color: #b88b4a;
-    font-weight: 600;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-}
-
-tr:hover {
-    background-color: #fff3e0;
-}
-.stats {
-    margin-bottom: 50px; /* додатковий простір перед наступною секцією */
-}
-/* --- Статус замовлення --- */
-.status-select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-weight: 600;
-}
-
-.status-select.new { background-color: #fff4cc; color: #8a6d3b; }
-.status-select.working { background-color: #cce5ff; color: #004085; }
-.status-select.cancel { background-color: #f8d7da; color: #721c24; }
-.status-select.ready { background-color: #d4edda; color: #155724; }
-
-/* --- Кнопки --- */
-button.update-btn {
-    background: #4CAF50;
-    color: #fff;
-    border: none;
-    padding: 7px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-right: 5px;
-    transition: all 0.3s ease;
-}
-
-button.update-btn:hover {
-    background: #45a049;
-}
-
-button.delete-btn {
-    background: #f44336;
-    color: #fff;
-    border: none;
-    padding: 7px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-button.delete-btn:hover {
-    background: #d32f2f;
-}
-
-/* --- Мобільна адаптація --- */
-@media screen and (max-width: 1200px) {
-    .top-nav {
-        flex-direction: column;
-    }
-    .top-nav a.button {
-        margin: 5px 0;
-    }
-    table {
-        min-width: 800px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-    table {
-        font-size: 0.85em;
-    }
-    th, td {
-        padding: 10px 12px;
-    }
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }

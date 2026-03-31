@@ -2,6 +2,7 @@ import os
 from functools import wraps
 from datetime import datetime
 from flask import jsonify
+from werkzeug.utils import secure_filename
 
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from flask_pymongo import PyMongo
@@ -230,7 +231,75 @@ def admin_home():
         users=users,
         users_count=users_count
     )
+@app.route('/update_order_status/<order_id>', methods=['POST'])
+@role_required(['admin'])
+def update_order_status(order_id):
 
+    status = request.form.get("status")
+
+    mongo.db.orders.update_one(
+        {"_id": ObjectId(order_id)},
+        {"$set": {"status": status}}
+    )
+
+    return redirect(url_for('admin_home'))
+
+@app.route('/delete_order/<order_id>', methods=['POST'])
+@role_required(['admin'])
+def delete_order(order_id):
+
+    mongo.db.orders.delete_one({
+        "_id": ObjectId(order_id)
+    })
+
+    return redirect(url_for('admin_home'))
+
+@app.route('/delete_user/<user_id>', methods=['POST'])
+@role_required(['admin'])
+def delete_user(user_id):
+
+    mongo.db.users.delete_one({
+        "_id": ObjectId(user_id)
+    })
+
+    mongo.db.cart.delete_many({"user_id": user_id})
+    mongo.db.orders.delete_many({"user_id": user_id})
+
+    return redirect(url_for('admin_home'))
+
+UPLOAD_FOLDER = "static/images/products"
+
+@app.route('/add_product', methods=['POST'])
+@role_required(['admin'])
+def add_product():
+
+    name = request.form.get("name")
+    type_ = request.form.get("type")
+    material = request.form.get("material")
+    stone = request.form.get("stone")
+    price = int(request.form.get("price"))
+    weight = float(request.form.get("weight") or 0)
+    description = request.form.get("description")
+
+    file = request.files["image"]
+
+    filename = secure_filename(file.filename)
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
+
+    file.save(filepath)
+
+    mongo.db.products.insert_one({
+        "name": name,
+        "type": type_,
+        "material": material,
+        "stone": [stone],
+        "price": price,
+        "weight": weight,
+        "description": description,
+        "image": filename
+    })
+
+    return redirect(url_for('admin_home'))
 
 # ================= STATIC PAGES =================
 @app.route("/catalog")
