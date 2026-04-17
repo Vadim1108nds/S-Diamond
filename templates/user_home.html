@@ -63,26 +63,24 @@
 
 <!-- CATEGORIES -->
 <section class="categories">
-    <div class="category">
+    <a href="{{ url_for('catalog', type='ring') }}" class="category">
         <img src="{{ url_for('static', filename='images/ring.jpg') }}" alt="Кільця">
         <p>Кільця</p>
-    </div>
-
-    <div class="category">
+    </a>
+    <a href="{{ url_for('catalog', type='pendant') }}" class="category">
         <img src="{{ url_for('static', filename='images/pidvis.jpg') }}" alt="Підвіски">
         <p>Підвіски</p>
-    </div>
-
-    <div class="category">
+    </a>
+    <a href="{{ url_for('catalog', type='bracelet') }}" class="category">
         <img src="{{ url_for('static', filename='images/braslet.jpg') }}" alt="Браслети">
         <p>Браслети</p>
-    </div>
-
-    <div class="category">
+    </a>
+    <a href="{{ url_for('catalog', type='earrings') }}" class="category">
         <img src="{{ url_for('static', filename='images/sereshka.jpg') }}" alt="Сережки">
         <p>Сережки</p>
-    </div>
+    </a>
 </section>
+
 
 <!-- CUSTOM DESIGN -->
 <section class="custom-light">

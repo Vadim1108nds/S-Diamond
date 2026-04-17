@@ -117,6 +117,7 @@ def user_home():
     return render_template("user_home.html")
 
 
+
 # ================= PROFILE =================
 @app.route('/profile')
 @role_required(['user'])
@@ -313,6 +314,13 @@ def catalog():
 
     min_price = request.args.get("min", type=int)
     max_price = request.args.get("max", type=int)
+
+    type_mapping = {
+        "Кільця": "ring",
+        "Сережки": "earrings",
+        "Браслети": "bracelet",
+        "Підвіски": "pendant"
+    }
 
     if type_:
         query["type"] = type_

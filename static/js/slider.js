@@ -33,4 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateSlider();
 });
+if (cards.length <= 4) {
+    leftBtn.style.display = 'none';
+    rightBtn.style.display = 'none';
+}
 
