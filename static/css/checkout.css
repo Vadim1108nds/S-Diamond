@@ -1,0 +1,372 @@
+/* ========== RESET & GLOBAL ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #CBE3F5;
+    color: #1a2a3a;
+    line-height: 1.5;
+}
+
+/* ========== TOP BAR ========== */
+.top-bar {
+    background: #0E1A4D;
+    overflow: hidden;
+    padding: 12px 0;
+}
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 140px;
+    white-space: nowrap;
+    animation: scroll 25s linear infinite;
+}
+
+.marquee-track span {
+    color: #FFD966;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 0 60px;
+    background: transparent;
+    flex-wrap: wrap;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    position: relative;
+    text-decoration: none;
+    color: #0E1A4D;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background: #0E1A4D;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #2c4090;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.nav-buttons a {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.nav-buttons .login,
+.nav-buttons .register {
+    background: #0E1A4D;
+    color: #ffffff;
+    border: 1px solid #0E1A4D;
+}
+
+.nav-buttons a:hover {
+    background: #2a3a7a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+#cartCount {
+    background: #FFD966;
+    color: #0E1A4D;
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-size: 12px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+/* ========== CHECKOUT SECTION ========== */
+.checkout-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.checkout-title {
+    font-size: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: #0E1A4D;
+    margin-bottom: 30px;
+    border-left: 4px solid #FFD966;
+    padding-left: 20px;
+}
+
+.checkout-content {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* Форма */
+.checkout-form {
+    flex: 2;
+    min-width: 280px;
+    background: white;
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #0E1A4D;
+}
+
+.form-group label i {
+    margin-right: 8px;
+    color: #FFD966;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d0dbe8;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    transition: 0.2s;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #FFD966;
+    box-shadow: 0 0 0 3px rgba(255, 217, 102, 0.2);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-hint {
+    display: block;
+    font-size: 0.7rem;
+    color: #6a8aaa;
+    margin-top: 4px;
+}
+
+/* Радіо-групи */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 40px;
+    transition: 0.2s;
+}
+
+.radio-label:hover {
+    background: #f0f4f9;
+}
+
+.radio-label input {
+    width: 18px;
+    height: 18px;
+    accent-color: #FFD966;
+}
+
+/* Підсумок замовлення */
+.order-summary {
+    flex: 1;
+    min-width: 260px;
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+    position: sticky;
+    top: 120px;
+}
+
+.order-summary h3 {
+    font-size: 1.3rem;
+    color: #0E1A4D;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e8f0;
+    padding-bottom: 10px;
+}
+
+.summary-items {
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+
+.item-info {
+    display: flex;
+    gap: 8px;
+}
+
+.item-name {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item-qty {
+    color: #6a8aaa;
+}
+
+.item-price {
+    font-weight: 600;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 2px solid #e0e8f0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0E1A4D;
+}
+
+.summary-note {
+    margin-top: 16px;
+    padding: 12px;
+    background: #f0f4f9;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #0E1A4D;
+}
+
+.summary-note i {
+    margin-right: 6px;
+    color: #FFD966;
+}
+
+/* Кнопка */
+.submit-btn {
+    width: 100%;
+    background: #0E1A4D;
+    color: #FFD966;
+    border: none;
+    padding: 14px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background: #2a3a7a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Адаптація */
+@media (max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        gap: 20px;
+    }
+    .nav-links {
+        justify-content: center;
+    }
+    .nav-buttons {
+        justify-content: center;
+    }
+    .checkout-content {
+        flex-direction: column;
+    }
+    .order-summary {
+        position: static;
+    }
+}
+
+@media (max-width: 550px) {
+    .checkout-title {
+        font-size: 1.5rem;
+    }
+    .checkout-form {
+        padding: 20px;
+    }
+}

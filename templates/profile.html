@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Профіль | S Diamond</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 </head>
@@ -13,25 +12,21 @@
 <header class="navbar">
     <div class="logo">
         <a href="{{ url_for('user_home') }}">
-            <img src="{{ url_for('static', filename='images/logo.png') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="S Diamond">
         </a>
     </div>
-
     <nav class="nav-links">
         <a href="{{ url_for('catalog') }}">Каталог</a>
         <a href="{{ url_for('custom_design') }}">Індивідуальне замовлення</a>
         <a href="{{ url_for('about') }}">Про нас</a>
         <a href="{{ url_for('contacts') }}">Контакти</a>
     </nav>
-
     <div class="nav-buttons">
         <a href="{{ url_for('logout') }}" class="login">Вийти</a>
     </div>
 </header>
 
-
 <section class="profile-wrapper">
-
     <!-- SIDEBAR -->
     <div class="profile-sidebar">
         <button class="tab-btn active" data-tab="info">Профіль</button>
@@ -41,98 +36,108 @@
 
     <!-- CONTENT -->
     <div class="profile-content">
-
         <!-- INFO -->
         <div class="tab-content active" id="info">
             <h2>Особиста інформація</h2>
-
             <form method="POST" action="{{ url_for('update_profile') }}" class="profile-card">
-
-                <label>Username</label>
+                <label>Ім'я користувача</label>
                 <input type="text" name="username" value="{{ user.username }}" required>
-
                 <label>Email</label>
                 <input type="email" name="email" value="{{ user.email }}" required>
-
                 <hr>
-
                 <label>Поточний пароль</label>
                 <input type="password" name="current_password">
-
                 <label>Новий пароль</label>
                 <input type="password" name="new_password">
-
-                <button type="submit" class="luxury-btn">
-                    Зберегти зміни
-                </button>
+                <button type="submit" class="luxury-btn">Зберегти зміни</button>
             </form>
         </div>
 
-
-        <!-- ACTIVE ORDERS -->
+        <!-- ACTIVE ORDERS (не скасовані) -->
         <div class="tab-content" id="orders">
             <h2>Активні замовлення</h2>
-
             {% for order in active_orders %}
             <div class="order-card">
-                <div>
-                    <h4>{{ order.custom_name }}</h4>
-                    <p>{{ order.material }} | {{ order.order_type }}</p>
+                <div class="order-header">
+                    <strong>№ {{ order.order_number }}</strong>
+                    <span class="status {{ order.status|replace(' ', '-')|lower }}">{{ order.status }}</span>
                 </div>
-
-                <div class="order-actions">
-                    <span class="status">{{ order.status }}</span>
-
-                    {% if order.status != "готове до видачі" %}
-                    <form method="POST" action="{{ url_for('cancel_order', order_id=order._id) }}">
-                        <button type="submit" class="cancel-btn">Скасувати</button>
-                    </form>
-                    {% endif %}
+                <div class="order-details">
+                    <p><strong>Отримувач:</strong> {{ order.fullname }}</p>
+                    <p><strong>Телефон:</strong> {{ order.phone }}</p>
+                    <p><strong>Спосіб отримання:</strong> 
+                        {% if order.delivery_type == 'delivery' %}
+                            Доставка (Нова Пошта, {{ order.nova_poshta_branch }})
+                        {% else %}
+                            Самовивіз (м. Чернівці, вул. Щербанюка 13А)
+                        {% endif %}
+                    </p>
+                    <p><strong>Оплата:</strong> 
+                        {% if order.payment_method == 'card' %}Карткою онлайн{% else %}Готівка при отриманні{% endif %}
+                    </p>
+                    <p><strong>Коментар:</strong> {{ order.comment or '—' }}</p>
+                    <div class="order-items">
+                        <strong>Товари:</strong>
+                        <ul>
+                        {% for item in order['items'] %}
+                            <li>{{ item.name }} (x{{ item.qty }}) — {{ item.price * item.qty }} грн</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <p class="order-total"><strong>Загальна сума:</strong> {{ order.total_amount }} грн</p>
                 </div>
+                {% if order.status not in ['скасовано', 'відмова', 'готово до відправки', 'відправлено'] %}
+                <form method="POST" action="{{ url_for('cancel_order', order_id=order._id) }}" class="cancel-form">
+                    <button type="submit" class="cancel-btn">Скасувати замовлення</button>
+                </form>
+                {% endif %}
             </div>
             {% else %}
             <p>Активних замовлень немає.</p>
             {% endfor %}
         </div>
 
-
-        <!-- CANCELLED -->
+        <!-- CANCELLED ORDERS -->
         <div class="tab-content" id="cancelled">
             <h2>Скасовані замовлення</h2>
-
             {% for order in cancelled_orders %}
             <div class="order-card cancelled">
-                <div>
-                    <h4>{{ order.custom_name }}</h4>
-                    <p>{{ order.material }} | {{ order.order_type }}</p>
+                <div class="order-header">
+                    <strong>№ {{ order.order_number }}</strong>
+                    <span class="status cancelled">Скасовано</span>
                 </div>
-                <span class="status cancelled-status">Скасовано</span>
+                <div class="order-details">
+                    <p><strong>Отримувач:</strong> {{ order.fullname }}</p>
+                    <p><strong>Телефон:</strong> {{ order.phone }}</p>
+                    <div class="order-items">
+                        <strong>Товари:</strong>
+                        <ul>
+                        {% for item in order['items'] %}
+                            <li>{{ item.name }} (x{{ item.qty }}) — {{ item.price * item.qty }} грн</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <p class="order-total"><strong>Загальна сума:</strong> {{ order.total_amount }} грн</p>
+                </div>
             </div>
             {% else %}
             <p>Скасованих замовлень немає.</p>
             {% endfor %}
         </div>
-
     </div>
-
 </section>
 
-
-<!-- JS -->
 <script>
-const buttons = document.querySelectorAll(".tab-btn");
-const contents = document.querySelectorAll(".tab-content");
-
-buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-
-        buttons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        contents.forEach(c => c.classList.remove("active"));
-        document.getElementById(btn.dataset.tab).classList.add("active");
+    const buttons = document.querySelectorAll(".tab-btn");
+    const contents = document.querySelectorAll(".tab-content");
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            contents.forEach(c => c.classList.remove("active"));
+            document.getElementById(btn.dataset.tab).classList.add("active");
+        });
     });
-});
 </script>
 
 </body>

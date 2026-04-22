@@ -25,7 +25,7 @@ body {
 .marquee-track {
     display: flex;
     align-items: center;
-    gap: 140px;            /* 🔥 великий красивий відступ */
+    gap: 140px;            
     white-space: nowrap;
     animation: scroll 25s linear infinite;
 }
