@@ -1,3 +1,5 @@
+import { setCustomization, capturePreview } from './custom_design_3d.js';
+
 document.addEventListener('DOMContentLoaded', function() {
     // DOM елементи
     const typeBtns = document.querySelectorAll('#typeOptions .option-btn');
@@ -6,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const sizeSlider = document.getElementById('ringSize');
     const sizeValue = document.getElementById('sizeValue');
     const sizeGroup = document.getElementById('sizeGroup');
-    const modelImage = document.getElementById('modelImage');
     const totalPriceSpan = document.getElementById('totalPrice');
     const deliveryTimeSpan = document.getElementById('deliveryTime');
     const addToCartBtn = document.getElementById('addToCartCustom');
@@ -31,26 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         deliveryTimeSpan.innerText = delivery + ' днів';
     }
 
-    // Оновлення зображення (можна замінити на 3D)
-    function updateModelImage() {
-        let imgPath = '';
-        if (currentType === 'ring') {
-            if (currentMaterial === 'gold') imgPath = '/static/images/custom/ring_gold.png';
-            else if (currentMaterial === 'silver') imgPath = '/static/images/custom/ring_silver.png';
-            else imgPath = '/static/images/custom/ring_platinum.png';
-        } else if (currentType === 'earrings') {
-            imgPath = '/static/images/custom/earrings.png';
-        } else {
-            imgPath = '/static/images/custom/pendant.png';
-        }
-        if (currentStone !== 'none' && currentType === 'ring') {
-            imgPath = imgPath.replace('.png', '_stone.png');
-        }
-        modelImage.src = imgPath;
-        modelImage.alt = `${currentType} ${currentMaterial} ${currentStone}`;
-        modelImage.onerror = () => { modelImage.src = '/static/images/custom/default.png'; };
-    }
-
     // Показати/сховати розмір (тільки для кільця)
     function toggleSizeGroup() {
         sizeGroup.style.display = currentType === 'ring' ? 'block' : 'none';
@@ -67,10 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Оновлення всього
+    // Оновлення всього (ціна, 3D, розмір)
     function updateAll() {
         updatePriceAndDelivery();
-        updateModelImage();
+        // Викликаємо 3D-оновлення – замість статичної картинки
+        setCustomization(currentType, currentMaterial, currentStone);
         toggleSizeGroup();
     }
 
@@ -109,21 +91,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Кнопка "Додати в кошик" – РЕАЛЬНИЙ ЗАПИТ
+    // Кнопка "Додати в кошик"
     addToCartBtn.addEventListener('click', async () => {
         const totalPrice = parseInt(totalPriceSpan.innerText);
         const leadDays = parseInt(deliveryTimeSpan.innerText) || 14;
+        const previewImage = capturePreview();
 
-        // Формуємо дані для відправки на сервер
         const payload = {
-            type: currentType,           // 'ring', 'earrings', 'pendant'
-            metal: currentMaterial,      // 'gold', 'silver', 'platinum'
-            stone: currentStone,         // 'amethyst', 'diamond', 'sapphire', 'none'
+            type: currentType,
+            metal: currentMaterial,
+            stone: currentStone,
+            image: previewImage,
             size: currentType === 'ring' ? currentSize : null,
             price: totalPrice,
             lead_days: leadDays,
-            description: `Індивідуальне ${currentType === 'ring' ? 'кільце' : currentType === 'earrings' ? 'сережки' : 'підвіска'} з ${currentMaterial}, камінь: ${currentStone}${currentType === 'ring' ? `, розмір ${currentSize}` : ''}`,
-            image: '/static/images/custom_placeholder.png'
+            description: `Індивідуальне ${currentType === 'ring' ? 'кільце' : currentType === 'earrings' ? 'сережки' : 'браслет'} з ${currentMaterial}, камінь: ${currentStone}${currentType === 'ring' ? `, розмір ${currentSize}` : ''}`,
         };
 
         try {
@@ -143,14 +125,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const data = await response.json();
             if (data.success) {
-                // Оновлюємо лічильник кошика в шапці
                 const cartCountSpan = document.getElementById('cartCount');
                 if (cartCountSpan) cartCountSpan.innerText = data.count;
                 alert(' Товар додано до кошика!');
-                // За бажанням – перенаправляємо на сторінку кошика:
                 window.location.href = '/cart';
             } else {
-                alert(' Помилка додавання товару.');
+                alert('Помилка додавання товару.');
             }
         } catch (err) {
             console.error('Помилка:', err);

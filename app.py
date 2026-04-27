@@ -430,12 +430,30 @@ def add_to_cart():
 @app.route('/custom-design')
 def custom_design():
     return render_template("custom_design.html")
+
 @app.route('/add_custom_to_cart', methods=['POST'])
 @role_required(['user'])
 def add_custom_to_cart():
     data = request.json
     user_id = session['user_id']
 
+    # 🔥 ЗБЕРІГАЄМО КАРТИНКУ
+    image_data = data.get('image')
+    filename = None
+
+    if image_data:
+        header, encoded = image_data.split(",", 1)
+
+        filename = f"custom_{datetime.utcnow().timestamp()}.png"
+        folder = "static/images/custom"
+        os.makedirs(folder, exist_ok=True)
+
+        filepath = os.path.join(folder, filename)
+
+        with open(filepath, "wb") as f:
+            f.write(base64.b64decode(encoded))
+
+    # 🔥 СТВОРЮЄМО ТОВАР
     custom_item = {
         "user_id": user_id,
         "is_custom": True,
@@ -449,17 +467,18 @@ def add_custom_to_cart():
             "size": data.get('size'),
             "lead_days": data.get('lead_days', 14),
             "description": data.get('description', 'Індивідуальна прикраса'),
-            "image": data.get('image', '/static/images/custom_placeholder.png')
+            "image": f"/static/images/custom/{filename}" if filename else None  # 🔥 ВАЖЛИВО
         }
     }
 
-    # Можна дозволити тільки один кастомний товар або будь-яку кількість
     mongo.db.cart.insert_one(custom_item)
 
-    # Оновлюємо лічильник кошика
     cart_count = mongo.db.cart.count_documents({"user_id": user_id})
-    return jsonify({"success": True, "count": cart_count})
 
+    return jsonify({
+        "success": True,
+        "count": cart_count
+    })
 
 @app.route('/about')
 def about():
