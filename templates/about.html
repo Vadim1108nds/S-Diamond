@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>S Diamond | Ювелірні історії в металі</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+</head>
+<body>
+
+   <!-- TOP BAR -->
+<div class="top-bar">
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+   <div class="logo">
+    <a href="{{ url_for('user_home') }}">
+        <img src="{{ url_for('static', filename='images/logo.png') }}">
+    </a>
+</div>
+
+<nav class="nav-links">
+    <a href="{{ url_for('catalog') }}">Каталог</a>
+    <a href="{{ url_for('custom_design') }}">Індивідуальне замовлення</a>
+    <a href="{{ url_for('about') }}">Про нас</a>
+    <a href="{{ url_for('contacts') }}">Контакти</a>
+</nav>
+
+<div class="nav-buttons">
+    <a href="{{ url_for('profile_page') }}" class="login">Профіль</a>
+    <a href="{{ url_for('cart') }}" class="register">Кошик<span id="cartCount">{{ cart_count }}</span></a>
+</div>
+</header>
+
+   <div class="container video-container">
+    <div class="video-section">
+        <video class="local-video" autoplay muted loop playsinline poster="{{ url_for('static', filename='images/hero.png') }}">
+            <source src="{{ url_for('static', filename='video/jewelry.mp4') }}" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+        <div class="video-caption">Кожна прикраса — це історія, народжена в металі</div>
+    </div>
+</div>
+
+    <!-- Hero + кнопка каталогу -->
+    <div class="container">
+        <div class="hero">
+            <div class="hero-sub">Ми створюємо історії в металі</div>
+            <h1 class="hero-title">Ювелірні вироби, <span>які мають значення</span></h1>
+            <a href="{{ url_for('catalog') }}" class="btn-catalog" id="catalog">✨ Переглянути каталог</a>
+        </div>
+
+        <!-- Бренд історія -->
+        <section class="brand-story" id="about">
+            <h2 class="section-title">S Diamond</h2>
+            <div class="story-text">
+                <p>S Diamond — це більше ніж ювелірний бренд. Ми створюємо прикраси, які не просто доповнюють образ, а розповідають історію про свого власника. Кожен виріб народжується з ідеї, емоції та уваги до деталей, що робить його по-справжньому унікальним.</p>
+                <p>Ми поєднуємо традиційну ювелірну майстерність із сучасним підходом до дизайну, щоб створювати речі, які залишаються актуальними роками. Для нас важливо не лише як виглядає прикраса, а й які емоції вона викликає — від першого дотику до моменту, коли вона стає частиною вашого життя.</p>
+            </div>
+        </section>
+
+        <!-- Чому обирають нас (4 картки) -->
+        <section class="why-us">
+            <h2 class="section-title">Чому обирають нас</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-gem"></i>
+                    <h3>Довговічність</h3>
+                    <p>Ми використовуємо лише перевірені матеріали високої якості, щоб прикраси служили роками та не втрачали свого вигляду.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-hand-sparkles"></i>
+                    <h3>Ручна робота</h3>
+                    <p>Контролюємо кожен етап виробництва — від ескізу до фінального полірування, щоб гарантувати бездоганну якість.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Преміальна упаковка</h3>
+                    <p>Кожна прикраса оформлюється як особливий подарунок, який приємно відкривати і дарувати.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-pen-fancy"></i>
+                    <h3>Унікальний дизайн</h3>
+                    <p>Кожен виріб створюється індивідуально з урахуванням побажань клієнта, стилю та деталей, які мають значення.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Як ми працюємо (4 кроки) -->
+        <section class="work-process" id="individual">
+            <h2 class="section-title">Як ми працюємо</h2>
+            <div class="steps">
+                <div class="step"><div class="step-number">1</div><h3>Консультація</h3><p>Обговорюємо ідею, стиль та деталі майбутнього виробу.</p></div>
+                <div class="step"><div class="step-number">2</div><h3>Дизайн</h3><p>Створюємо унікальний концепт та узгоджуємо всі нюанси.</p></div>
+                <div class="step"><div class="step-number">3</div><h3>Виготовлення</h3><p>Майстри вручну реалізують дизайн, дотримуючись найвищих стандартів якості.</p></div>
+                <div class="step"><div class="step-number">4</div><h3>Доставка</h3><p>Ви отримуєте готовий виріб у стильній упаковці, готовий стати частиною вашої історії.</p></div>
+            </div>
+        </section>
+
+        <!-- Контакти + Google Maps (Чернівці, Щербанюка 13А) -->
+        <section class="contact-map-section" id="contact">
+            <h2 class="section-title">Як нас знайти</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="brand-footer-tagline">
+                        <h3>S Diamond</h3>
+                        <p>Створюємо ювелірні прикраси з характером.<br>Індивідуальний дизайн та бездоганна якість.</p>
+                    </div>
+                    <ul class="contact-details">
+                        <li><i class="fas fa-phone-alt"></i> Телефон: +38 (0XX) XXX XX XX</li>
+                        <li><i class="fas fa-envelope"></i> Email: info@brand.ua</li>
+                        <li><i class="fab fa-instagram"></i> Instagram: @brand</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Адреса: м. Чернівці, вул. Щербанюка 13А</li>
+                    </ul>
+                    <div class="legal">
+                        <p>2026 S Diamond. Усі права захищені.</p>
+                        <p class="policies">Політика конфіденційності | Публічна оферта</p>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2678.401674620065!2d25.940650115950386!3d48.29227597923556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4734085d3f1e1b8b%3A0x5f3a2b1e7c8d9a4f!2z0LLRg9C70LjRhtGPINCo0LXRgNCx0LDQvdGO0LrQsCwgMTMg0JAsINCn0LXRgNC90ZbQstGG0ZYsINCn0LXRgNC90ZbQstC10YbRjNC60LAg0L7QsdC70LDRgdGC0Yw!5e0!3m2!1suk!2sua!4v1682345678901!5m2!1suk!2sua" 
+                        width="100%" 
+                        height="280" 
+                        style="border:0; border-radius: 24px;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                    <p class="map-note">вул. Щербанюка 13А, Чернівці</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-mobile">
+            <p>© S Diamond — ювелірні історії, що надихають</p>
+        </footer>
+    </div>
+</body>
+</html>

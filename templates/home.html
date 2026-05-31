@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S Diamond</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+
+            
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+        </div>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+<header class="navbar">
+    <div class="logo">
+    <a href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="S Diamond">
+    </a>
+</div>
+
+    <nav class="nav-links">
+       <a href="{{ url_for('catalog') }}">Каталог</a>
+        <a href="{{ url_for('custom_design') }}">Індивідуальне замовлення</a>
+        <a href="{{ url_for('about') }}">Про нас</a>
+        <a href="{{ url_for('contacts') }}">Контакти</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="{{ url_for('login') }}" class="login">Вхід</a>
+        <a href="{{ url_for('register') }}" class="register">Реєстрація</a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Досконалість у кожній деталі</h1>
+        <p>
+            Вишукане золоте кільце з натуральним каменем —
+            символ статусу та впевненості.
+        </p>
+        <a href="{{ url_for('catalog') }}" class="hero-btn">
+    Дізнатися більше
+</a>
+    </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+    <a href="{{ url_for('catalog', type='ring') }}" class="category">
+        <img src="{{ url_for('static', filename='images/ring.jpg') }}" alt="Кільця">
+        <p>Кільця</p>
+    </a>
+    <a href="{{ url_for('catalog', type='pendant') }}" class="category">
+        <img src="{{ url_for('static', filename='images/pidvis.jpg') }}" alt="Підвіски">
+        <p>Підвіски</p>
+    </a>
+    <a href="{{ url_for('catalog', type='bracelet') }}" class="category">
+        <img src="{{ url_for('static', filename='images/braslet.jpg') }}" alt="Браслети">
+        <p>Браслети</p>
+    </a>
+    <a href="{{ url_for('catalog', type='earrings') }}" class="category">
+        <img src="{{ url_for('static', filename='images/sereshka.jpg') }}" alt="Сережки">
+        <p>Сережки</p>
+    </a>
+</section>
+
+
+<!-- CUSTOM DESIGN -->
+<section class="custom-light">
+    <img src="/static/images/custom.png" class="custom-light-img" alt="Custom">
+
+    <div class="custom-light-content">
+        <h2>Індивідуальний дизайн прикрас</h2>
+        <p>
+            Створюємо вироби, що відображають саме вашу історію —
+            витонченість у кожній деталі.
+        </p>
+        </p>
+        <a href="{{ url_for('custom_design') }}" class="hero-btn">
+    Дізнатися більше
+</a>
+    </div>
+</section>
+<!-- BEST PRODUCTS -->
+<section class="best">
+    <div class="best-header">
+        <h2>Кращі вироби</h2>
+        <a href="#" class="more-link">Більше ›</a>
+    </div>
+
+    <div class="slider-wrapper">
+
+        <button class="arrow left">&#10094;</button>
+
+        <div class="products" id="productSlider">
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Royal Bloom</h4>
+                <p>18 900 грн</p>
+            </div>
+
+            <!-- Додаткові для листання -->
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Golden Grace</h4>
+                <p>22 500 грн</p>
+            </div>
+
+            <div class="product-card">
+                <img src="/static/images/ring.jpg" alt="">
+                <h4>Emerald Shine</h4>
+                <p>25 000 грн</p>
+            </div>
+
+        </div>
+
+        <button class="arrow right">&#10095;</button>
+
+    </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="advantages">
+    <img src="{{ url_for('static', filename='images/advent.png') }}" 
+         alt="Переваги" 
+         class="advantages-img">
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-left">
+            <h2>S Diamond</h2>
+
+            <p class="footer-description">
+                Створюємо ювелірні прикраси з характером.
+                Індивідуальний дизайн та бездоганна якість.
+            </p>
+
+            <div class="footer-contacts">
+                <h3>Контакти</h3>
+                <p>Телефон: +38 (0XX) XXX XX XX</p>
+                <p>Email: info@brand.ua</p>
+                <p>Instagram: @brand</p>
+                <p>Адреса: м. Київ</p>
+            </div>
+        </div>
+
+        <div class="footer-right">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                 alt="S Diamond" 
+                 class="footer-logo-img">
+        </div>
+         <div class="footer-bottom">
+        <p>2026 S Diamond . Усі права захищені.</p>
+        <p>Політика конфіденційності | Публічна оферта</p>
+    </div>
+
+    </div>
+</footer>
+
+    
+
+
+<a href="#top" class="scroll-top">&#8679;</a>
+<script src="{{ url_for('static', filename='js/slider.js') }}"></script>
+
+</body>
+</html>

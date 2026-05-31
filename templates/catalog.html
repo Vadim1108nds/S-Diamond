@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S Diamond — Каталог</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/catalog.css') }}">
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+            <span>Знижки до -30%</span>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+   <div class="logo">
+    <a href="{{ url_for('user_home') }}">
+        <img src="{{ url_for('static', filename='images/logo.png') }}">
+    </a>
+</div>
+
+<nav class="nav-links">
+    <a href="{{ url_for('catalog') }}">Каталог</a>
+    <a href="{{ url_for('custom_design') }}">Індивідуальне замовлення</a>
+    <a href="{{ url_for('about') }}">Про нас</a>
+    <a href="{{ url_for('contacts') }}">Контакти</a>
+</nav>
+
+<div class="nav-buttons">
+    <a href="{{ url_for('profile_page') }}" class="login">Профіль</a>
+    <a href="{{ url_for('cart') }}" class="register">Кошик<span id="cartCount">{{ cart_count }}</span></a>
+</div>
+</header>
+
+<!-- ГОЛОВНИЙ WRAPPER -->
+<div class="catalog-wrapper">
+
+<!-- FILTER -->
+<div class="filters">
+
+<div class="filter-section">
+<div class="filter-title">Ціна <span>▾</span></div>
+
+<div class="filter-content">
+<div class="price-values">
+<span id="minPrice">6000</span>
+<span id="maxPrice">70000</span>
+</div>
+
+<div class="range-slider">
+<input type="range" min="6000" max="70000" value="6000" id="rangeMin">
+<input type="range" min="6000" max="70000" value="70000" id="rangeMax">
+</div>
+</div>
+</div>
+
+<div class="filter-section">
+<div class="filter-title">Тип виробу <span>▾</span></div>
+<div class="filter-content">
+<label><input type="radio" name="type" value="ring"> Кільця</label>
+<label><input type="radio" name="type" value="earrings"> Сережки</label>
+<label><input type="radio" name="type" value="bracelet"> Браслети</label>
+<label><input type="radio" name="type" value="pendant"> Підвіски</label>
+</div>
+</div>
+
+<div class="filter-section">
+<div class="filter-title">Матеріал <span>▾</span></div>
+<div class="filter-content">
+<label><input type="radio" name="material" value="gold"> Золото</label>
+<label><input type="radio" name="material" value="silver"> Срібло</label>
+<label><input type="radio" name="material" value="platinum"> Платина</label>
+</div>
+</div>
+
+<div class="filter-section">
+<div class="filter-title">Камінь <span>▾</span></div>
+<div class="filter-content">
+<label><input type="radio" name="stone" value="diamond"> Діамант</label>
+<label><input type="radio" name="stone" value="sapphire"> Сапфір</label>
+<label><input type="radio" name="stone" value="amethyst"> Аметист</label>
+<label><input type="radio" name="stone" value="ruby"> Рубін</label>
+</div>
+</div>
+
+<div class="filter-buttons">
+<button class="apply">Застосувати</button>
+<button class="reset">Скинути</button>
+</div>
+
+</div>
+
+<!-- PRODUCTS -->
+<div class="products">
+
+{% for product in products %}
+
+<div class="product-card" data-id="{{ product._id }}">
+<img src="{{ url_for('static', filename='images/products/' + product.image) }}">
+<h4>{{ product.name }}</h4>
+
+<div class="price">{{ product.price }} грн</div>
+<p class="desc">{{ product.description }}</p>
+
+<div class="meta">{{ product.material }} | {{ product.stone[0] }}</div>
+
+<button class="buy-btn">Купити</button>
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/catalog.js') }}"></script>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-left">
+            <h2>S Diamond</h2>
+            <p>Створюємо ювелірні прикраси з характером.</p>
+
+            <div class="footer-contacts">
+                <p>Телефон: +38 (0XX) XXX XX XX</p>
+                <p>Email: info@brand.ua</p>
+                <p>м. Київ</p>
+            </div>
+        </div>
+
+        <div class="footer-right">
+            <img src="{{ url_for('static', filename='images/logo.png') }}">
+        </div>
+
+    </div>
+</footer>
+
+</body>
+</html>

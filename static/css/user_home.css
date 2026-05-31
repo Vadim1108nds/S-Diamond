@@ -1,183 +1,516 @@
-/* Загальні стилі */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fefefe;
-  color: #333;
-  margin: 0;
-  padding: 0;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-header {
+body {
+    background: #CBE3F5;
+    color: #1a1a1a;
+}
+
+/* TOP BAR */
+.top-bar {
+    background: #0E1A4D;
+    overflow: hidden;
+    padding: 12px 0;
+}
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 140px;            
+    white-space: nowrap;
+    animation: scroll 25s linear infinite;
+}
+
+.marquee-track span {
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* вирівнює по вертикалі */
-    background: linear-gradient(135deg, #fff8f0, #fff6e6);
-    padding: 25px 40px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    border-radius: 15px;
+    align-items: center;
+    height: 100px;
+    padding: 0 60px;
+}
+
+/* LOGO */
+.logo img {
+    height: 70px;
+    width: auto;
+    display: block;
+}
+
+/* LINKS */
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    position: relative;
+    text-decoration: none;
+    color: #0E1A4D;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+/* Luxury underline animation */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background: #0E1A4D;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #1c2f80;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+
+/* ================= BUTTONS ================= */
+
+.nav-buttons a {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 30px;
+    border: 1px solid #0E1A4D;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-left: 12px;
+    text-decoration: none;
+}
+
+/* Вхід */
+.nav-buttons .login {
+    background: #0E1A4D;
+    color: #ffffff;
+}
+
+/* Реєстрація */
+.nav-buttons .register {
+    background: #0E1A4D;
+    color: #ffffff;
+}
+
+/* Hover ефект кнопок */
+.nav-buttons a:hover {
+    background: #1c2f80;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* HERO */
+.hero {
+    height: 650px;
+    display: flex;
+    align-items: center;
+    padding-left: 120px;
+    position: relative;
+
+    background-image: url("../images/hero.png");
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+/* легке затемнення тільки для фото */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(203, 227, 245, 0.95) 0%,
+        rgba(203, 227, 245, 0.85) 40%,
+        rgba(203, 227, 245, 0.0) 70%
+    );
+}
+
+/* щоб текст був поверх затемнення */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+}
+
+/* Заголовок */
+.hero-content h1 {
+    font-size: 56px;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 25px;
+    line-height: 1.1;
+}
+
+/* Текст */
+.hero-content p {
+    font-size: 20px;
+    font-style: italic;
+    margin-bottom: 35px;
+    line-height: 1.5;
+}
+
+/* Кнопка */
+.hero-content a {
+    display: inline-block;
+    background: #0E1A4D;
+    color: #ffffff;
+    padding: 18px 60px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 16px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover ефект */
+.hero-content a:hover {
+    background: #1c2f80;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* CATEGORIES */
+.categories {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px 60px;
+    background: #CBE3F5; /* як на скріні */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.category {
+    flex: 1;
+    text-align: center;
+}
+
+.category img {
+    width: 230px;        /* великі кола */
+    height: 230px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: 0.3s ease;
+}
+
+/* затемняється ТІЛЬКИ фото */
+.category img:hover {
+    filter: brightness(0.85);
+    transform: scale(1.04);
+}
+
+.category p {
+    margin-top: 25px;
+    font-size: 24px;
+    font-style: italic;
+    color: #1a1a1a;
+}
+
+/* CUSTOM */
+.custom-light {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.custom-light-img {
+    width: 100%;
+    height: 90vh;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* Контент поверх фото */
+.custom-light-content {
+    position: absolute;
+    top: 100px;
+    left: 120px;
+    max-width: 560px;
+    color: #1a1a1a; /* чорний текст */
+}
+
+/* Заголовок */
+.custom-light-content h2 {
+    font-size: 52px;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Текст */
+.custom-light-content p {
+    font-size: 20px;
+    line-height: 1.6;
     margin-bottom: 40px;
 }
 
-.header-texts h1 {
-    font-size: 2.4em;
-    color: #b88b4a;
-    margin: 0;
-}
-
-.header-texts p {
-    font-size: 1.1em;
-    color: #555;
-    margin: 5px 0 0 0;
-}
-
-header a.button {
-    background: #f44336;
-    color: #fff;
+/* Кнопка */
+.custom-light-content a {
+    display: inline-block;
+    background: #0E1A4D;
+    color: #ffffff;
+    padding: 20px 80px;
+    border-radius: 60px;
     text-decoration: none;
-    padding: 12px 28px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 16px;
-    box-shadow: 0 4px 12px rgba(244,67,54,0.4);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-header a.button:hover {
-    background: #d32f2f;
-    box-shadow: 0 6px 16px rgba(211,47,47,0.5);
-    transform: translateY(-2px);
+/* Hover */
+.custom-light-content a:hover {
+    background: #162873;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
 
-header a.button:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 8px rgba(211,47,47,0.5);
-}
-header h1 {
-  font-size: 2em;
-  color: #d9850f;
-  margin: 0;
+/* SECTION */
+.best {
+    padding: 80px 120px;
+    background: #CBE3F5;
 }
 
-.logout-btn {
-  background: #b88b4a;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.3s;
+.best-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
 }
 
-.logout-btn:hover { background: #a17a3f; }
-
-main {
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: auto;
+.best-header h2 {
+    font-size: 40px;
+    font-weight: 700;
 }
 
-h2 {
-  color: #b88b4a;
-  margin-bottom: 20px;
-  font-size: 1.8em;
-  border-bottom: 2px solid #f0e2c8;
-  padding-bottom: 10px;
+/* ===================== */
+/*       SLIDER          */
+/* ===================== */
+
+.slider-wrapper {
+    position: relative;
+    overflow: hidden;
 }
 
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
 }
 
-.card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  padding: 20px;
-  width: 300px;
-  text-align: center;
-  transition: transform 0.3s;
+.product-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-.card img {
-  width: 100%;
-  border-radius: 12px;
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
 }
 
-.price {
-  font-weight: bold;
-  margin:10px 0;
-  color:#b88b4a;
+.product-card h4 {
+    margin: 15px 0 5px;
+    font-size: 1.1rem;
 }
 
-/* --- Кастомне замовлення --- */
-.custom-order form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.product-card .price {
+    font-weight: bold;
+    color: #0E1A4D;
+    font-size: 1.2rem;
 }
 
-input, select, button {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 15px;
+.buy-btn {
+    background: #0E1A4D;
+    color: #FFD966;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: 600;
 }
 
-button {
-  background: #b88b4a;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
+/* ===================== */
+/*        ARROWS         */
+/* ===================== */
+
+.arrow {
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 100;
 }
 
-button:hover { background: #a17a3f; }
+.arrow.left {
+    left: 10px;
+}
 
-/* --- Модальне повідомлення --- */
-.modal-overlay {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.5);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
+.arrow.right {
+    right: 10px;
 }
-.modal-overlay.show { display:flex; }
-.modal {
-  background:#fff;
-  padding:30px 40px;
-  border-radius:10px;
-  max-width:400px;
-  width:90%;
-  text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,0.3);
-  animation: popupFadeIn 0.3s ease-in-out;
-}
-.modal p.success { color: #4CAF50; }
-.modal p.error { color: #f44336; }
-.close-modal {
-  background: #4CAF50;
-  color: #fff;
-  border:none;
-  padding:10px 20px;
-  border-radius:5px;
-  cursor:pointer;
-  font-size:16px;
-  transition: background 0.3s;
-}
-.close-modal:hover { background:#45a049; }
 
-@keyframes popupFadeIn {
-  from { opacity:0; transform:scale(0.9); }
-  to { opacity:1; transform:scale(1); }
+.arrow:disabled {
+    opacity: 0.3;
+}
+
+/* ADVANTAGES */
+.advantages {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.advantages-img {
+    width: 100%;
+    
+}
+/* FOOTER */
+.footer {
+    background: #0E1A4D;
+    color: white;
+    padding: 40px 80px 20px 80px; /* ще менше */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Ліва частина */
+
+.footer-left {
+    max-width: 500px;
+}
+
+.footer-left h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.footer-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.footer-contacts h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.footer-contacts p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Логотип */
+
+.footer-logo-img {
+    width: 180px;   /* менший */
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Нижній блок — строго внизу */
+
+.footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.footer-bottom p {
+    margin-bottom: 5px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #0E1A4D;
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    line-height: 55px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+    z-index: 9999;
+}
+
+.scroll-top:hover {
+    transform: translateY(-4px);
 }
